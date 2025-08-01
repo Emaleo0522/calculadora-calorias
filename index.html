@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Meta tags básicas para SEO y responsive -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculadora y registro completo de kilocalorías con TMB, seguimiento de alimentos y historial diario">
+    <meta name="keywords" content="calculadora TMB, registro calorías, seguimiento nutricional, Harris-Benedict">
+    <meta name="author" content="Calculadora y Registro de Kilocalorías">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    
+    <title>Calculadora y Registro de Kilocalorías | TMB y Seguimiento Nutricional</title>
+    
+    <!-- Bootstrap 5 CSS desde CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <style>
+        /* Estilos personalizados para la aplicación */
+        
+        /* Variables CSS para colores consistentes */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --info-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+        
+        /* Estilos generales del body */
+        body {
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+        
+        /* Contenedor principal con efecto glassmorphism */
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Estilos para las secciones principales */
+        .section-card {
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Iconos de cabecera para cada sección */
+        .section-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Estilos para inputs y selects con focus mejorado */
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+        }
+        
+        /* Botones principales con gradientes */
+        .btn-gradient-primary {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        .btn-gradient-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+        
+        .btn-gradient-success {
+            background: var(--success-gradient);
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+        
+        .btn-gradient-success:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+            color: white;
+        }
+        
+        .btn-gradient-warning {
+            background: var(--warning-gradient);
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+        
+        .btn-gradient-warning:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(250, 112, 154, 0.4);
+            color: white;
+        }
+        
+        /* Tarjetas de resultados */
+        .result-card {
+            background: var(--secondary-gradient);
+            color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        .result-card.show {
+            display: block;
+        }
+        
+        /* Animación de entrada */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Lista de alimentos seleccionados */
+        .food-list-item {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .food-list-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Estilo para el total de calorías */
+        .total-calories {
+            background: var(--success-gradient);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+        
+        /* Historial de días */
+        .history-item {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .history-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Navegación por pestañas personalizada */
+        .nav-pills .nav-link {
+            border-radius: 10px;
+            font-weight: 600;
+            margin: 0 0.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-pills .nav-link.active {
+            background: var(--primary-gradient);
+            border: none;
+        }
+        
+        /* Mensajes de error y validación */
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        /* Efectos visuales adicionales */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .section-card {
+                padding: 1.5rem;
+            }
+            
+            .section-icon {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor principal de la aplicación -->
+    <div class="container-fluid py-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-10">
+                <div class="main-container p-4">
+                    
+                    <!-- Encabezado principal -->
+                    <div class="text-center mb-5">
+                        <i class="bi bi-calculator section-icon"></i>
+                        <h1 class="display-4 fw-bold mb-3" style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                            Calculadora y Registro de Kilocalorías
+                        </h1>
+                        <p class="lead text-muted">Calcula tu TMB, registra tus comidas y lleva un control completo de tu nutrición diaria</p>
+                    </div>
+                    
+                    <!-- Navegación por pestañas -->
+                    <ul class="nav nav-pills nav-justified mb-4" id="mainTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="tmb-tab" data-bs-toggle="pill" data-bs-target="#tmb-section" type="button" role="tab">
+                                <i class="bi bi-speedometer2 me-2"></i>Calculadora TMB
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="food-tab" data-bs-toggle="pill" data-bs-target="#food-section" type="button" role="tab">
+                                <i class="bi bi-basket me-2"></i>Registro de Alimentos
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="history-tab" data-bs-toggle="pill" data-bs-target="#history-section" type="button" role="tab">
+                                <i class="bi bi-clock-history me-2"></i>Historial
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <!-- Contenido de las pestañas -->
+                    <div class="tab-content" id="mainTabsContent">
+                        
+                        <!-- Sección 1: Calculadora TMB -->
+                        <div class="tab-pane fade show active" id="tmb-section" role="tabpanel">
+                            <div class="section-card">
+                                <div class="text-center mb-4">
+                                    <i class="bi bi-activity section-icon"></i>
+                                    <h2 class="fw-bold">Calculadora de Tasa Metabólica Basal (TMB)</h2>
+                                    <p class="text-muted">Calcula tu requerimiento calórico diario usando la fórmula Harris-Benedict</p>
+                                </div>
+                                
+                                <form id="tmbForm" novalidate>
+                                    <div class="row">
+                                        <!-- Edad -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="age" class="form-label fw-semibold">
+                                                <i class="bi bi-calendar-event me-2"></i>Edad (años)
+                                            </label>
+                                            <input type="number" class="form-control form-control-lg" id="age" min="15" max="100" required>
+                                            <div class="error-message" id="ageError">Ingresa una edad válida (15-100 años)</div>
+                                        </div>
+                                        
+                                        <!-- Peso -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="weight" class="form-label fw-semibold">
+                                                <i class="bi bi-speedometer2 me-2"></i>Peso (kg)
+                                            </label>
+                                            <input type="number" class="form-control form-control-lg" id="weight" min="30" max="300" step="0.1" required>
+                                            <div class="error-message" id="weightError">Ingresa un peso válido (30-300 kg)</div>
+                                        </div>
+                                        
+                                        <!-- Altura -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="height" class="form-label fw-semibold">
+                                                <i class="bi bi-rulers me-2"></i>Altura (cm)
+                                            </label>
+                                            <input type="number" class="form-control form-control-lg" id="height" min="120" max="250" required>
+                                            <div class="error-message" id="heightError">Ingresa una altura válida (120-250 cm)</div>
+                                        </div>
+                                        
+                                        <!-- Género -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="gender" class="form-label fw-semibold">
+                                                <i class="bi bi-person me-2"></i>Género
+                                            </label>
+                                            <select class="form-select form-select-lg" id="gender" required>
+                                                <option value="">Selecciona tu género</option>
+                                                <option value="male">Masculino</option>
+                                                <option value="female">Femenino</option>
+                                            </select>
+                                            <div class="error-message" id="genderError">Selecciona tu género</div>
+                                        </div>
+                                        
+                                        <!-- Nivel de actividad -->
+                                        <div class="col-12 mb-4">
+                                            <label for="activity" class="form-label fw-semibold">
+                                                <i class="bi bi-activity me-2"></i>Nivel de Actividad Física
+                                            </label>
+                                            <select class="form-select form-select-lg" id="activity" required>
+                                                <option value="">Selecciona tu nivel de actividad</option>
+                                                <option value="1.2">Sedentario (poco o ningún ejercicio)</option>
+                                                <option value="1.375">Ligero (ejercicio ligero 1-3 días/semana)</option>
+                                                <option value="1.55">Moderado (ejercicio moderado 3-5 días/semana)</option>
+                                                <option value="1.725">Intenso (ejercicio intenso 6-7 días/semana)</option>
+                                                <option value="1.9">Muy intenso (ejercicio muy intenso, trabajo físico)</option>
+                                            </select>
+                                            <div class="error-message" id="activityError">Selecciona tu nivel de actividad</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Botón calcular -->
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-gradient-primary btn-lg">
+                                            <i class="bi bi-calculator-fill me-2"></i>Calcular TMB y Calorías Diarias
+                                        </button>
+                                    </div>
+                                </form>
+                                
+                                <!-- Resultado TMB -->
+                                <div id="tmbResult" class="result-card">
+                                    <i class="bi bi-fire" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                                    <h3 class="mb-3">Tu Requerimiento Calórico Diario</h3>
+                                    <div class="display-3 fw-bold mb-2" id="tmbValue">0</div>
+                                    <p class="mb-3">kilocalorías por día</p>
+                                    <div class="row text-center">
+                                        <div class="col-md-4">
+                                            <div class="glass-effect p-3 rounded">
+                                                <h6>TMB</h6>
+                                                <div class="fw-bold" id="bmrValue">0 kcal</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="glass-effect p-3 rounded">
+                                                <h6>Perder peso</h6>
+                                                <div class="fw-bold" id="loseWeight">0 kcal</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="glass-effect p-3 rounded">
+                                                <h6>Ganar peso</h6>
+                                                <div class="fw-bold" id="gainWeight">0 kcal</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sección 2: Registro de Alimentos -->
+                        <div class="tab-pane fade" id="food-section" role="tabpanel">
+                            <div class="section-card">
+                                <div class="text-center mb-4">
+                                    <i class="bi bi-basket section-icon"></i>
+                                    <h2 class="fw-bold">Registro de Alimentos y Bebidas</h2>
+                                    <p class="text-muted">Busca y agrega alimentos para calcular el total calórico de tu comida</p>
+                                </div>
+                                
+                                <!-- Búsqueda de alimentos -->
+                                <div class="row mb-4">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="foodSearch" class="form-label fw-semibold">
+                                            <i class="bi bi-search me-2"></i>Buscar Alimento o Bebida
+                                        </label>
+                                        <input type="text" class="form-control form-control-lg" id="foodSearch" placeholder="Completa para filtrar la lista">
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="foodSelect" class="form-label fw-semibold">
+                                            <i class="bi bi-list me-2"></i>Seleccionar Alimento
+                                        </label>
+                                        <select class="form-select form-select-lg" id="foodSelect">
+                                            <option value="">Cargando alimentos...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Cantidad y agregar -->
+                                <div class="row mb-4">
+                                    <div class="col-md-8 mb-3">
+                                        <label for="foodAmount" class="form-label fw-semibold">
+                                            <i class="bi bi-scales me-2"></i>Cantidad
+                                        </label>
+                                        <div class="input-group input-group-lg">
+                                            <input type="number" class="form-control" id="foodAmount" min="1" max="2000" step="1" placeholder="100">
+                                            <span class="input-group-text" id="unitLabel">g</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3 d-flex align-items-end">
+                                        <button type="button" class="btn btn-gradient-success w-100" id="addFoodBtn">
+                                            <i class="bi bi-plus-circle me-2"></i>Agregar
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Lista de alimentos agregados -->
+                                <div class="mb-4">
+                                    <h4 class="fw-bold mb-3">
+                                        <i class="bi bi-list-ul me-2"></i>Alimentos de tu comida
+                                    </h4>
+                                    <div id="foodList" class="mb-3">
+                                        <div class="text-center text-muted py-4">
+                                            <i class="bi bi-inbox" style="font-size: 3rem; opacity: 0.3;"></i>
+                                            <p class="mt-2">No hay alimentos agregados aún</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Total de calorías -->
+                                    <div id="totalCalories" class="total-calories" style="display: none;">
+                                        <i class="bi bi-lightning-charge me-2"></i>
+                                        Total de la comida: <span id="totalValue">0</span> kcal
+                                    </div>
+                                </div>
+                                
+                                <!-- Botones de acción -->
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-gradient-primary me-2" id="saveMealBtn" disabled>
+                                        <i class="bi bi-save me-2"></i>Guardar Comida del Día
+                                    </button>
+                                    <button type="button" class="btn btn-gradient-warning" id="clearMealBtn" disabled>
+                                        <i class="bi bi-trash me-2"></i>Limpiar Lista
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sección 3: Historial -->
+                        <div class="tab-pane fade" id="history-section" role="tabpanel">
+                            <div class="section-card">
+                                <div class="text-center mb-4">
+                                    <i class="bi bi-clock-history section-icon"></i>
+                                    <h2 class="fw-bold">Historial de Comidas</h2>
+                                    <p class="text-muted">Revisa tu registro de comidas y calorías por día</p>
+                                </div>
+                                
+                                <!-- Controles del historial -->
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <button type="button" class="btn btn-gradient-primary" id="refreshHistoryBtn">
+                                            <i class="bi bi-arrow-clockwise me-2"></i>Actualizar Historial
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                        <button type="button" class="btn btn-outline-danger" id="clearHistoryBtn">
+                                            <i class="bi bi-trash me-2"></i>Limpiar Todo el Historial
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Lista del historial -->
+                                <div id="historyList">
+                                    <div class="text-center text-muted py-5">
+                                        <i class="bi bi-calendar-x" style="font-size: 4rem; opacity: 0.3;"></i>
+                                        <h4 class="mt-3">No hay historial disponible</h4>
+                                        <p>Comienza agregando alimentos en la sección de registro</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap 5 JS desde CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        /**
+         * CALCULADORA Y REGISTRO DE KILOCALORÍAS
+         * Aplicación completa para calcular TMB y registrar consumo de alimentos
+         */
+        
+        // ===========================================
+        // BASE DE DATOS DE ALIMENTOS Y BEBIDAS
+        // ===========================================
+        
+        /**
+         * Array con más de 40 alimentos y bebidas comunes
+         * Cada objeto contiene: nombre, calorías por 100g/ml, unidad de medida
+         */
+        const foodDatabase = [
+            // Carnes y pescados
+            { name: "Pollo (pechuga sin piel)", calories: 165, unit: "g" },
+            { name: "Pollo (muslo con piel)", calories: 250, unit: "g" },
+            { name: "Carne de res magra", calories: 250, unit: "g" },
+            { name: "Cerdo magro", calories: 242, unit: "g" },
+            { name: "Salmón", calories: 208, unit: "g" },
+            { name: "Atún en lata", calories: 132, unit: "g" },
+            { name: "Sardinas", calories: 208, unit: "g" },
+            { name: "Merluza", calories: 90, unit: "g" },
+            
+            // Huevos y lácteos
+            { name: "Huevo entero", calories: 155, unit: "g" },
+            { name: "Leche entera", calories: 61, unit: "ml" },
+            { name: "Leche desnatada", calories: 34, unit: "ml" },
+            { name: "Yogur natural", calories: 59, unit: "g" },
+            { name: "Yogur desnatado", calories: 56, unit: "g" },
+            { name: "Queso fresco", calories: 174, unit: "g" },
+            { name: "Queso manchego", calories: 376, unit: "g" },
+            { name: "Mantequilla", calories: 717, unit: "g" },
+            
+            // Cereales y legumbres
+            { name: "Arroz blanco cocido", calories: 130, unit: "g" },
+            { name: "Arroz integral cocido", calories: 111, unit: "g" },
+            { name: "Pasta cocida", calories: 131, unit: "g" },
+            { name: "Pan blanco", calories: 265, unit: "g" },
+            { name: "Pan integral", calories: 247, unit: "g" },
+            { name: "Avena", calories: 389, unit: "g" },
+            { name: "Lentejas cocidas", calories: 116, unit: "g" },
+            { name: "Garbanzos cocidos", calories: 164, unit: "g" },
+            { name: "Frijoles negros cocidos", calories: 132, unit: "g" },
+            
+            // Verduras y hortalizas
+            { name: "Brócoli cocido", calories: 55, unit: "g" },
+            { name: "Espinacas cocidas", calories: 23, unit: "g" },
+            { name: "Zanahoria cocida", calories: 35, unit: "g" },
+            { name: "Patata cocida", calories: 87, unit: "g" },
+            { name: "Patata frita", calories: 365, unit: "g" },
+            { name: "Tomate", calories: 18, unit: "g" },
+            { name: "Lechuga", calories: 15, unit: "g" },
+            { name: "Cebolla", calories: 40, unit: "g" },
+            
+            // Frutas
+            { name: "Manzana", calories: 52, unit: "g" },
+            { name: "Plátano", calories: 89, unit: "g" },
+            { name: "Naranja", calories: 47, unit: "g" },
+            { name: "Fresa", calories: 32, unit: "g" },
+            { name: "Uva", calories: 67, unit: "g" },
+            { name: "Aguacate", calories: 160, unit: "g" },
+            { name: "Kiwi", calories: 61, unit: "g" },
+            
+            // Frutos secos y aceites
+            { name: "Almendras", calories: 579, unit: "g" },
+            { name: "Nueces", calories: 654, unit: "g" },
+            { name: "Aceite de oliva", calories: 884, unit: "ml" },
+            { name: "Aceite de girasol", calories: 884, unit: "ml" },
+            
+            // Bebidas
+            { name: "Agua", calories: 0, unit: "ml" },
+            { name: "Café solo", calories: 2, unit: "ml" },
+            { name: "Té", calories: 1, unit: "ml" },
+            { name: "Zumo de naranja", calories: 45, unit: "ml" },
+            { name: "Coca Cola", calories: 42, unit: "ml" },
+            { name: "Cerveza", calories: 43, unit: "ml" },
+            { name: "Vino tinto", calories: 85, unit: "ml" },
+            
+            // Dulces y snacks
+            { name: "Chocolate con leche", calories: 534, unit: "g" },
+            { name: "Galletas maría", calories: 436, unit: "g" },
+            { name: "Helado de vainilla", calories: 207, unit: "g" }
+        ];
+        
+        // ===========================================
+        // VARIABLES GLOBALES
+        // ===========================================
+        
+        let currentMeal = []; // Array para almacenar los alimentos de la comida actual
+        let filteredFoods = [...foodDatabase]; // Array filtrado para la búsqueda
+        
+        // ===========================================
+        // FUNCIONES DE VALIDACIÓN
+        // ===========================================
+        
+        /**
+         * Valida el formulario de TMB
+         * @returns {boolean} true si el formulario es válido
+         */
+        function validateTMBForm() {
+            let isValid = true;
+            
+            // Validar edad
+            const age = document.getElementById('age').value;
+            const ageError = document.getElementById('ageError');
+            if (!age || age < 15 || age > 100) {
+                ageError.style.display = 'block';
+                isValid = false;
+            } else {
+                ageError.style.display = 'none';
+            }
+            
+            // Validar peso
+            const weight = document.getElementById('weight').value;
+            const weightError = document.getElementById('weightError');
+            if (!weight || weight < 30 || weight > 300) {
+                weightError.style.display = 'block';
+                isValid = false;
+            } else {
+                weightError.style.display = 'none';
+            }
+            
+            // Validar altura
+            const height = document.getElementById('height').value;
+            const heightError = document.getElementById('heightError');
+            if (!height || height < 120 || height > 250) {
+                heightError.style.display = 'block';
+                isValid = false;
+            } else {
+                heightError.style.display = 'none';
+            }
+            
+            // Validar género
+            const gender = document.getElementById('gender').value;
+            const genderError = document.getElementById('genderError');
+            if (!gender) {
+                genderError.style.display = 'block';
+                isValid = false;
+            } else {
+                genderError.style.display = 'none';
+            }
+            
+            // Validar actividad
+            const activity = document.getElementById('activity').value;
+            const activityError = document.getElementById('activityError');
+            if (!activity) {
+                activityError.style.display = 'block';
+                isValid = false;
+            } else {
+                activityError.style.display = 'none';
+            }
+            
+            return isValid;
+        }
+        
+        // ===========================================
+        // FUNCIONES DE CÁLCULO TMB
+        // ===========================================
+        
+        /**
+         * Calcula la Tasa Metabólica Basal usando Harris-Benedict
+         * @returns {Object} Objeto con BMR y TDEE
+         */
+        function calculateTMB() {
+            const age = parseInt(document.getElementById('age').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseInt(document.getElementById('height').value);
+            const gender = document.getElementById('gender').value;
+            const activityLevel = parseFloat(document.getElementById('activity').value);
+            
+            let bmr;
+            
+            // Aplicar fórmula Harris-Benedict según género
+            if (gender === 'male') {
+                // Fórmula para hombres: BMR = 88.362 + (13.397 × peso) + (4.799 × altura) - (5.677 × edad)
+                bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+            } else {
+                // Fórmula para mujeres: BMR = 447.593 + (9.247 × peso) + (3.098 × altura) - (4.330 × edad)
+                bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+            }
+            
+            // Calcular TDEE (Total Daily Energy Expenditure)
+            const tdee = bmr * activityLevel;
+            
+            return {
+                bmr: Math.round(bmr),
+                tdee: Math.round(tdee)
+            };
+        }
+        
+        /**
+         * Muestra los resultados del cálculo TMB
+         * @param {Object} results Resultados del cálculo
+         */
+        function displayTMBResults(results) {
+            document.getElementById('tmbValue').textContent = results.tdee.toLocaleString();
+            document.getElementById('bmrValue').textContent = results.bmr.toLocaleString() + ' kcal';
+            document.getElementById('loseWeight').textContent = (results.tdee - 500).toLocaleString() + ' kcal';
+            document.getElementById('gainWeight').textContent = (results.tdee + 500).toLocaleString() + ' kcal';
+            
+            const resultCard = document.getElementById('tmbResult');
+            resultCard.classList.add('show');
+            
+            // Scroll suave hacia el resultado
+            resultCard.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        }
+        
+        // ===========================================
+        // FUNCIONES DE BÚSQUEDA DE ALIMENTOS
+        // ===========================================
+        
+        /**
+         * Filtra los alimentos según el texto de búsqueda
+         * @param {string} searchTerm Término de búsqueda
+         */
+        function filterFoods(searchTerm) {
+            if (!searchTerm || searchTerm.length === 0) {
+                filteredFoods = [...foodDatabase];
+            } else {
+                filteredFoods = foodDatabase.filter(food => 
+                    food.name.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+            updateFoodSelect();
+        }
+        
+        /**
+         * Actualiza el select de alimentos con los resultados filtrados
+         */
+        function updateFoodSelect() {
+            const foodSelect = document.getElementById('foodSelect');
+            
+            if (!foodSelect) {
+                return;
+            }
+            
+            foodSelect.innerHTML = '';
+            
+            if (filteredFoods.length === 0) {
+                foodSelect.innerHTML = '<option value="">No se encontraron alimentos</option>';
+                return;
+            }
+            
+            foodSelect.innerHTML = '<option value="">Selecciona un alimento</option>';
+            filteredFoods.forEach((food, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${food.name} (${food.calories} kcal/100${food.unit})`;
+                foodSelect.appendChild(option);
+            });
+        }
+        
+        // ===========================================
+        // FUNCIONES DE GESTIÓN DE COMIDAS
+        // ===========================================
+        
+        /**
+         * Agrega un alimento a la comida actual
+         */
+        function addFoodToMeal() {
+            const foodIndex = document.getElementById('foodSelect').value;
+            const amount = parseFloat(document.getElementById('foodAmount').value);
+            
+            if (!foodIndex || !amount || amount <= 0) {
+                alert('Por favor selecciona un alimento y especifica una cantidad válida');
+                return;
+            }
+            
+            const selectedFood = filteredFoods[foodIndex];
+            const calories = Math.round((selectedFood.calories / 100) * amount);
+            
+            const foodItem = {
+                name: selectedFood.name,
+                amount: amount,
+                unit: selectedFood.unit,
+                calories: calories,
+                id: Date.now() // ID único basado en timestamp
+            };
+            
+            currentMeal.push(foodItem);
+            updateFoodList();
+            updateTotalCalories();
+            
+            // Limpiar formulario
+            document.getElementById('foodSelect').value = '';
+            document.getElementById('foodAmount').value = '';
+        }
+        
+        /**
+         * Actualiza la lista visual de alimentos
+         */
+        function updateFoodList() {
+            const foodList = document.getElementById('foodList');
+            
+            if (currentMeal.length === 0) {
+                foodList.innerHTML = `
+                    <div class="text-center text-muted py-4">
+                        <i class="bi bi-inbox" style="font-size: 3rem; opacity: 0.3;"></i>
+                        <p class="mt-2">No hay alimentos agregados aún</p>
+                    </div>
+                `;
+                document.getElementById('saveMealBtn').disabled = true;
+                document.getElementById('clearMealBtn').disabled = true;
+                return;
+            }
+            
+            foodList.innerHTML = '';
+            currentMeal.forEach(food => {
+                const foodElement = document.createElement('div');
+                foodElement.className = 'food-list-item';
+                foodElement.innerHTML = `
+                    <div>
+                        <strong>${food.name}</strong><br>
+                        <small class="text-muted">${food.amount}${food.unit} • ${food.calories} kcal</small>
+                    </div>
+                    <button class="btn btn-sm btn-outline-danger" onclick="removeFoodFromMeal(${food.id})">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                `;
+                foodList.appendChild(foodElement);
+            });
+            
+            document.getElementById('saveMealBtn').disabled = false;
+            document.getElementById('clearMealBtn').disabled = false;
+        }
+        
+        /**
+         * Elimina un alimento de la comida actual
+         * @param {number} foodId ID del alimento a eliminar
+         */
+        function removeFoodFromMeal(foodId) {
+            currentMeal = currentMeal.filter(food => food.id !== foodId);
+            updateFoodList();
+            updateTotalCalories();
+        }
+        
+        /**
+         * Actualiza el total de calorías de la comida
+         */
+        function updateTotalCalories() {
+            const total = currentMeal.reduce((sum, food) => sum + food.calories, 0);
+            document.getElementById('totalValue').textContent = total.toLocaleString();
+            
+            const totalElement = document.getElementById('totalCalories');
+            if (currentMeal.length > 0) {
+                totalElement.style.display = 'block';
+            } else {
+                totalElement.style.display = 'none';
+            }
+        }
+        
+        /**
+         * Limpia la comida actual
+         */
+        function clearCurrentMeal() {
+            if (currentMeal.length === 0) return;
+            
+            if (confirm('¿Estás seguro de que quieres limpiar todos los alimentos de la lista?')) {
+                currentMeal = [];
+                updateFoodList();
+                updateTotalCalories();
+            }
+        }
+        
+        // ===========================================
+        // FUNCIONES DE ALMACENAMIENTO LOCAL
+        // ===========================================
+        
+        /**
+         * Guarda la comida actual en el historial
+         */
+        function saveMealToHistory() {
+            if (currentMeal.length === 0) {
+                alert('No hay alimentos para guardar');
+                return;
+            }
+            
+            const today = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
+            const totalCalories = currentMeal.reduce((sum, food) => sum + food.calories, 0);
+            
+            // Obtener historial existente
+            let history = JSON.parse(localStorage.getItem('calorieHistory') || '{}');
+            
+            // Agregar o actualizar el día actual
+            if (!history[today]) {
+                history[today] = {
+                    date: today,
+                    meals: [],
+                    totalCalories: 0
+                };
+            }
+            
+            // Agregar nueva comida al día
+            history[today].meals.push({
+                timestamp: new Date().toLocaleTimeString(),
+                foods: [...currentMeal],
+                totalCalories: totalCalories
+            });
+            
+            // Recalcular total del día
+            history[today].totalCalories = history[today].meals.reduce(
+                (sum, meal) => sum + meal.totalCalories, 0
+            );
+            
+            // Guardar en localStorage
+            localStorage.setItem('calorieHistory', JSON.stringify(history));
+            
+            // Limpiar comida actual
+            currentMeal = [];
+            updateFoodList();
+            updateTotalCalories();
+            
+            alert('Comida guardada exitosamente en el historial');
+        }
+        
+        /**
+         * Carga y muestra el historial
+         */
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('calorieHistory') || '{}');
+            const historyList = document.getElementById('historyList');
+            
+            if (Object.keys(history).length === 0) {
+                historyList.innerHTML = `
+                    <div class="text-center text-muted py-5">
+                        <i class="bi bi-calendar-x" style="font-size: 4rem; opacity: 0.3;"></i>
+                        <h4 class="mt-3">No hay historial disponible</h4>
+                        <p>Comienza agregando alimentos en la sección de registro</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Ordenar fechas de más reciente a más antigua
+            const sortedDates = Object.keys(history).sort((a, b) => new Date(b) - new Date(a));
+            
+            historyList.innerHTML = '';
+            sortedDates.forEach(date => {
+                const dayData = history[date];
+                const dayElement = document.createElement('div');
+                dayElement.className = 'history-item';
+                
+                const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('es-ES', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                let mealsHtml = '';
+                dayData.meals.forEach((meal, index) => {
+                    mealsHtml += `
+                        <div class="mb-2">
+                            <strong>Comida ${index + 1} (${meal.timestamp}):</strong> ${meal.totalCalories} kcal
+                            <ul class="mt-1">
+                                ${meal.foods.map(food => 
+                                    `<li>${food.name} - ${food.amount}${food.unit} (${food.calories} kcal)</li>`
+                                ).join('')}
+                            </ul>
+                        </div>
+                    `;
+                });
+                
+                dayElement.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <h5 class="mb-1">${formattedDate}</h5>
+                            <p class="text-muted mb-2">Total del día: <strong>${dayData.totalCalories} kcal</strong></p>
+                        </div>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteDayFromHistory('${date}')">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                    <div class="collapse" id="day-${date}">
+                        ${mealsHtml}
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#day-${date}">
+                        <i class="bi bi-eye"></i> Ver detalles
+                    </button>
+                `;
+                
+                historyList.appendChild(dayElement);
+            });
+        }
+        
+        /**
+         * Elimina un día específico del historial
+         * @param {string} date Fecha a eliminar
+         */
+        function deleteDayFromHistory(date) {
+            if (!confirm('¿Estás seguro de que quieres eliminar este día del historial?')) {
+                return;
+            }
+            
+            let history = JSON.parse(localStorage.getItem('calorieHistory') || '{}');
+            delete history[date];
+            localStorage.setItem('calorieHistory', JSON.stringify(history));
+            loadHistory();
+        }
+        
+        /**
+         * Limpia todo el historial
+         */
+        function clearAllHistory() {
+            if (!confirm('¿Estás seguro de que quieres eliminar TODO el historial? Esta acción no se puede deshacer.')) {
+                return;
+            }
+            
+            localStorage.removeItem('calorieHistory');
+            loadHistory();
+            alert('Historial eliminado completamente');
+        }
+        
+        // ===========================================
+        // EVENT LISTENERS
+        // ===========================================
+        
+        // Esperar a que el DOM esté completamente cargado
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Event listener para el formulario TMB
+            document.getElementById('tmbForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (validateTMBForm()) {
+                    const results = calculateTMB();
+                    displayTMBResults(results);
+                }
+            });
+            
+            // Event listeners para ocultar errores al escribir
+            document.querySelectorAll('input, select').forEach(element => {
+                element.addEventListener('input', function() {
+                    const errorElement = document.getElementById(this.id + 'Error');
+                    if (errorElement) {
+                        errorElement.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Event listener para búsqueda de alimentos
+            document.getElementById('foodSearch').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.trim();
+                if (searchTerm.length >= 1) {
+                    filterFoods(searchTerm);
+                } else {
+                    // Si no hay texto de búsqueda, mostrar todos los alimentos
+                    filteredFoods = [...foodDatabase];
+                    updateFoodSelect();
+                }
+            });
+            
+            // Event listener para actualizar unidad según alimento seleccionado
+            document.getElementById('foodSelect').addEventListener('change', function() {
+                const foodIndex = this.value;
+                const unitLabel = document.getElementById('unitLabel');
+                
+                if (foodIndex && filteredFoods[foodIndex]) {
+                    unitLabel.textContent = filteredFoods[foodIndex].unit;
+                } else {
+                    unitLabel.textContent = 'g';
+                }
+            });
+            
+            // Event listener para agregar alimento
+            document.getElementById('addFoodBtn').addEventListener('click', addFoodToMeal);
+            
+            // Event listener para limpiar comida
+            document.getElementById('clearMealBtn').addEventListener('click', clearCurrentMeal);
+            
+            // Event listener para guardar comida
+            document.getElementById('saveMealBtn').addEventListener('click', saveMealToHistory);
+            
+            // Event listener para actualizar historial
+            document.getElementById('refreshHistoryBtn').addEventListener('click', loadHistory);
+            
+            // Event listener para limpiar historial
+            document.getElementById('clearHistoryBtn').addEventListener('click', clearAllHistory);
+            
+            // Event listener para cargar historial al cambiar a la pestaña
+            document.getElementById('history-tab').addEventListener('shown.bs.tab', loadHistory);
+            
+            // Inicializar lista de alimentos - mostrar todos al cargar
+            filteredFoods = [...foodDatabase];
+            updateFoodSelect();
+        });
+        
+        // Hacer funciones globales para uso en onclick
+        window.removeFoodFromMeal = removeFoodFromMeal;
+        window.deleteDayFromHistory = deleteDayFromHistory;
+        
+    </script>
+</body>
+</html>
