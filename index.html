@@ -568,13 +568,52 @@
         
         /**
          * Array con más de 200 alimentos y bebidas fitness
-         * Cada objeto contiene: nombre, calorías por 100g/ml, unidad de medida, peso promedio por unidad (opcional)
-         * unitWeight: peso en gramos de 1 unidad promedio (ej: 1 manzana = 150g, 1 huevo = 60g)
+         * Cada objeto contiene información nutricional completa por 100g/ml
+         * 
+         * Estructura de datos:
+         * - name: nombre del alimento
+         * - calories: kilocalorías por 100g/ml
+         * - protein: proteínas en gramos
+         * - carbs: carbohidratos totales en gramos
+         * - fiber: fibra dietética en gramos
+         * - sugars: azúcares en gramos
+         * - fats: grasas totales en gramos
+         * - saturatedFat: grasas saturadas en gramos (opcional)
+         * - sodium: sodio en miligramos
+         * - water: agua en gramos (porcentaje de contenido de agua)
+         * - unit: unidad de medida (g/ml)
+         * - unitWeight: peso promedio de 1 unidad (opcional)
          */
         const foodDatabase = [
             // Carnes y aves - variadas preparaciones
-            { name: "Pollo (pechuga sin piel)", calories: 165, unit: "g", unitWeight: 150 },
-            { name: "Pollo (pechuga con piel)", calories: 197, unit: "g", unitWeight: 150 },
+            { 
+                name: "Pollo (pechuga sin piel)", 
+                calories: 165, 
+                protein: 31, 
+                carbs: 0, 
+                fiber: 0, 
+                sugars: 0, 
+                fats: 3.6, 
+                saturatedFat: 1, 
+                sodium: 74, 
+                water: 65, 
+                unit: "g", 
+                unitWeight: 150 
+            },
+            { 
+                name: "Pollo (pechuga con piel)", 
+                calories: 197, 
+                protein: 30, 
+                carbs: 0, 
+                fiber: 0, 
+                sugars: 0, 
+                fats: 7.8, 
+                saturatedFat: 2.2, 
+                sodium: 71, 
+                water: 62, 
+                unit: "g", 
+                unitWeight: 150 
+            },
             { name: "Pollo (muslo sin piel)", calories: 183, unit: "g", unitWeight: 90 },
             { name: "Pollo (muslo con piel)", calories: 250, unit: "g", unitWeight: 100 },
             { name: "Pollo (ala)", calories: 203, unit: "g", unitWeight: 50 },
@@ -614,11 +653,76 @@
             { name: "Calamar", calories: 175, unit: "g" },
             
             // Huevos - todas las preparaciones fitness
-            { name: "Huevo entero crudo", calories: 155, unit: "g", unitWeight: 60 },
-            { name: "Huevo entero cocido", calories: 155, unit: "g", unitWeight: 60 },
-            { name: "Clara de huevo", calories: 52, unit: "g", unitWeight: 33 },
-            { name: "Clara de huevo cocida", calories: 52, unit: "g", unitWeight: 33 },
-            { name: "Yema de huevo", calories: 322, unit: "g", unitWeight: 17 },
+            { 
+                name: "Huevo entero crudo", 
+                calories: 155, 
+                protein: 13, 
+                carbs: 1.1, 
+                fiber: 0, 
+                sugars: 1.1, 
+                fats: 11, 
+                saturatedFat: 3.3, 
+                sodium: 124, 
+                water: 76, 
+                unit: "g", 
+                unitWeight: 60 
+            },
+            { 
+                name: "Huevo entero cocido", 
+                calories: 155, 
+                protein: 13, 
+                carbs: 1.1, 
+                fiber: 0, 
+                sugars: 1.1, 
+                fats: 11, 
+                saturatedFat: 3.3, 
+                sodium: 124, 
+                water: 76, 
+                unit: "g", 
+                unitWeight: 60 
+            },
+            { 
+                name: "Clara de huevo", 
+                calories: 52, 
+                protein: 11, 
+                carbs: 0.7, 
+                fiber: 0, 
+                sugars: 0.7, 
+                fats: 0.2, 
+                saturatedFat: 0, 
+                sodium: 166, 
+                water: 88, 
+                unit: "g", 
+                unitWeight: 33 
+            },
+            { 
+                name: "Clara de huevo cocida", 
+                calories: 52, 
+                protein: 11, 
+                carbs: 0.7, 
+                fiber: 0, 
+                sugars: 0.7, 
+                fats: 0.2, 
+                saturatedFat: 0, 
+                sodium: 166, 
+                water: 88, 
+                unit: "g", 
+                unitWeight: 33 
+            },
+            { 
+                name: "Yema de huevo", 
+                calories: 322, 
+                protein: 16, 
+                carbs: 3.6, 
+                fiber: 0, 
+                sugars: 0.6, 
+                fats: 27, 
+                saturatedFat: 9.5, 
+                sodium: 48, 
+                water: 52, 
+                unit: "g", 
+                unitWeight: 17 
+            },
             { name: "Huevo hervido", calories: 155, unit: "g", unitWeight: 60 },
             { name: "Huevo escalfado", calories: 143, unit: "g", unitWeight: 60 },
             { name: "Huevo frito (poco aceite)", calories: 196, unit: "g", unitWeight: 65 },
@@ -659,9 +763,48 @@
             { name: "Cebolla", calories: 40, unit: "g" },
             
             // Frutas
-            { name: "Manzana", calories: 52, unit: "g", unitWeight: 150 },
-            { name: "Plátano", calories: 89, unit: "g", unitWeight: 120 },
-            { name: "Naranja", calories: 47, unit: "g", unitWeight: 170 },
+            { 
+                name: "Manzana", 
+                calories: 52, 
+                protein: 0.3, 
+                carbs: 13.8, 
+                fiber: 2, 
+                sugars: 10.4, 
+                fats: 0.2, 
+                saturatedFat: 0, 
+                sodium: 1, 
+                water: 86, 
+                unit: "g", 
+                unitWeight: 150 
+            },
+            { 
+                name: "Plátano", 
+                calories: 89, 
+                protein: 1.1, 
+                carbs: 22.8, 
+                fiber: 2.6, 
+                sugars: 12.2, 
+                fats: 0.3, 
+                saturatedFat: 0.1, 
+                sodium: 1, 
+                water: 75, 
+                unit: "g", 
+                unitWeight: 120 
+            },
+            { 
+                name: "Naranja", 
+                calories: 47, 
+                protein: 0.9, 
+                carbs: 11.8, 
+                fiber: 2.4, 
+                sugars: 9.4, 
+                fats: 0.1, 
+                saturatedFat: 0, 
+                sodium: 0, 
+                water: 87, 
+                unit: "g", 
+                unitWeight: 170 
+            },
             { name: "Fresa", calories: 32, unit: "g", unitWeight: 12 },
             { name: "Uva", calories: 67, unit: "g", unitWeight: 5 },
             { name: "Aguacate", calories: 160, unit: "g", unitWeight: 200 },
@@ -1065,7 +1208,16 @@
                 displayText = `${amount}${finalUnit}`;
             }
             
+            // Calcular todos los nutrientes proporcionalmente
             const calories = Math.round((selectedFood.calories / 100) * finalAmount);
+            const protein = selectedFood.protein ? Math.round(((selectedFood.protein / 100) * finalAmount) * 10) / 10 : 0;
+            const carbs = selectedFood.carbs ? Math.round(((selectedFood.carbs / 100) * finalAmount) * 10) / 10 : 0;
+            const fiber = selectedFood.fiber ? Math.round(((selectedFood.fiber / 100) * finalAmount) * 10) / 10 : 0;
+            const sugars = selectedFood.sugars ? Math.round(((selectedFood.sugars / 100) * finalAmount) * 10) / 10 : 0;
+            const fats = selectedFood.fats ? Math.round(((selectedFood.fats / 100) * finalAmount) * 10) / 10 : 0;
+            const saturatedFat = selectedFood.saturatedFat ? Math.round(((selectedFood.saturatedFat / 100) * finalAmount) * 10) / 10 : 0;
+            const sodium = selectedFood.sodium ? Math.round(((selectedFood.sodium / 100) * finalAmount) * 10) / 10 : 0;
+            const water = selectedFood.water ? Math.round(((selectedFood.water / 100) * finalAmount) * 10) / 10 : 0;
             
             const foodItem = {
                 name: selectedFood.name,
@@ -1073,6 +1225,14 @@
                 unit: finalUnit,
                 displayText: displayText,
                 calories: calories,
+                protein: protein,
+                carbs: carbs,
+                fiber: fiber,
+                sugars: sugars,
+                fats: fats,
+                saturatedFat: saturatedFat,
+                sodium: sodium,
+                water: water,
                 id: Date.now() // ID único basado en timestamp
             };
             
@@ -1109,10 +1269,23 @@
             currentMeal.forEach(food => {
                 const foodElement = document.createElement('div');
                 foodElement.className = 'food-list-item';
+                // Crear información nutricional detallada si está disponible
+                let nutritionInfo = `${food.calories} kcal`;
+                if (food.protein > 0 || food.carbs > 0 || food.fats > 0) {
+                    const nutritionDetails = [];
+                    if (food.protein > 0) nutritionDetails.push(`P: ${food.protein}g`);
+                    if (food.carbs > 0) nutritionDetails.push(`C: ${food.carbs}g`);
+                    if (food.fats > 0) nutritionDetails.push(`G: ${food.fats}g`);
+                    if (food.fiber > 0) nutritionDetails.push(`F: ${food.fiber}g`);
+                    
+                    nutritionInfo += ` | ${nutritionDetails.join(' • ')}`;
+                }
+                
                 foodElement.innerHTML = `
                     <div>
                         <strong>${food.name}</strong><br>
-                        <small class="text-muted">${food.displayText || (food.amount + food.unit)} • ${food.calories} kcal</small>
+                        <small class="text-muted">${food.displayText || (food.amount + food.unit)}</small><br>
+                        <small class="text-info">${nutritionInfo}</small>
                     </div>
                     <button class="btn btn-sm btn-outline-danger" onclick="removeFoodFromMeal(${food.id})">
                         <i class="bi bi-trash"></i>
@@ -1136,18 +1309,73 @@
         }
         
         /**
-         * Actualiza el total de calorías de la comida
+         * Actualiza el total de calorías y nutrientes de la comida
          */
         function updateTotalCalories() {
-            const total = currentMeal.reduce((sum, food) => sum + food.calories, 0);
-            document.getElementById('totalValue').textContent = total.toLocaleString();
-            
-            const totalElement = document.getElementById('totalCalories');
-            if (currentMeal.length > 0) {
-                totalElement.style.display = 'block';
-            } else {
-                totalElement.style.display = 'none';
+            if (currentMeal.length === 0) {
+                document.getElementById('totalCalories').style.display = 'none';
+                return;
             }
+            
+            // Calcular totales de todos los nutrientes
+            const totals = currentMeal.reduce((acc, food) => {
+                acc.calories += food.calories || 0;
+                acc.protein += food.protein || 0;
+                acc.carbs += food.carbs || 0;
+                acc.fiber += food.fiber || 0;
+                acc.sugars += food.sugars || 0;
+                acc.fats += food.fats || 0;
+                acc.saturatedFat += food.saturatedFat || 0;
+                acc.sodium += food.sodium || 0;
+                acc.water += food.water || 0;
+                return acc;
+            }, {
+                calories: 0,
+                protein: 0,
+                carbs: 0,
+                fiber: 0,
+                sugars: 0,
+                fats: 0,
+                saturatedFat: 0,
+                sodium: 0,
+                water: 0
+            });
+            
+            // Redondear valores
+            Object.keys(totals).forEach(key => {
+                if (key !== 'calories') {
+                    totals[key] = Math.round(totals[key] * 10) / 10;
+                }
+            });
+            
+            // Actualizar display principal
+            document.getElementById('totalValue').textContent = totals.calories.toLocaleString();
+            
+            // Crear información nutricional detallada
+            const nutritionDetails = [];
+            if (totals.protein > 0) nutritionDetails.push(`Proteínas: ${totals.protein}g`);
+            if (totals.carbs > 0) nutritionDetails.push(`Carbohidratos: ${totals.carbs}g`);
+            if (totals.fats > 0) nutritionDetails.push(`Grasas: ${totals.fats}g`);
+            if (totals.fiber > 0) nutritionDetails.push(`Fibra: ${totals.fiber}g`);
+            if (totals.sodium > 0) nutritionDetails.push(`Sodio: ${totals.sodium}mg`);
+            
+            // Actualizar o crear elemento de detalles nutricionales
+            let nutritionDetailsElement = document.getElementById('nutritionDetails');
+            if (!nutritionDetailsElement && nutritionDetails.length > 0) {
+                nutritionDetailsElement = document.createElement('div');
+                nutritionDetailsElement.id = 'nutritionDetails';
+                nutritionDetailsElement.className = 'mt-2 small text-white-50';
+                document.getElementById('totalCalories').appendChild(nutritionDetailsElement);
+            }
+            
+            if (nutritionDetailsElement && nutritionDetails.length > 0) {
+                nutritionDetailsElement.innerHTML = nutritionDetails.join(' • ');
+                nutritionDetailsElement.style.display = 'block';
+            } else if (nutritionDetailsElement) {
+                nutritionDetailsElement.style.display = 'none';
+            }
+            
+            document.getElementById('totalCalories').style.display = 'block';
         }
         
         /**
