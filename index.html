@@ -450,13 +450,29 @@
                                 
                                 <!-- Cantidad y agregar -->
                                 <div class="row mb-4">
-                                    <div class="col-md-8 mb-3">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="measureType" class="form-label fw-semibold">
+                                            <i class="bi bi-toggles me-2"></i>Tipo de Medida
+                                        </label>
+                                        <select class="form-select form-select-lg" id="measureType">
+                                            <option value="grams">Por Gramos/ml</option>
+                                            <option value="units" disabled>Por Unidades</option>
+                                        </select>
+                                        <div class="form-text" id="measureHelp">
+                                            Selecciona cómo quieres medir el alimento
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
                                         <label for="foodAmount" class="form-label fw-semibold">
                                             <i class="bi bi-scales me-2"></i>Cantidad
                                         </label>
                                         <div class="input-group input-group-lg">
                                             <input type="number" class="form-control" id="foodAmount" min="1" max="2000" step="1" placeholder="100">
                                             <span class="input-group-text" id="unitLabel">g</span>
+                                        </div>
+                                        <div class="form-text" id="amountHelp">
+                                            Cantidad en gramos o mililitros
                                         </div>
                                     </div>
                                     
@@ -551,18 +567,19 @@
         // ===========================================
         
         /**
-         * Array con más de 40 alimentos y bebidas comunes
-         * Cada objeto contiene: nombre, calorías por 100g/ml, unidad de medida
+         * Array con más de 200 alimentos y bebidas fitness
+         * Cada objeto contiene: nombre, calorías por 100g/ml, unidad de medida, peso promedio por unidad (opcional)
+         * unitWeight: peso en gramos de 1 unidad promedio (ej: 1 manzana = 150g, 1 huevo = 60g)
          */
         const foodDatabase = [
             // Carnes y aves - variadas preparaciones
-            { name: "Pollo (pechuga sin piel)", calories: 165, unit: "g" },
-            { name: "Pollo (pechuga con piel)", calories: 197, unit: "g" },
-            { name: "Pollo (muslo sin piel)", calories: 183, unit: "g" },
-            { name: "Pollo (muslo con piel)", calories: 250, unit: "g" },
-            { name: "Pollo (ala)", calories: 203, unit: "g" },
-            { name: "Pavo (pechuga)", calories: 135, unit: "g" },
-            { name: "Pavo (muslo)", calories: 144, unit: "g" },
+            { name: "Pollo (pechuga sin piel)", calories: 165, unit: "g", unitWeight: 150 },
+            { name: "Pollo (pechuga con piel)", calories: 197, unit: "g", unitWeight: 150 },
+            { name: "Pollo (muslo sin piel)", calories: 183, unit: "g", unitWeight: 90 },
+            { name: "Pollo (muslo con piel)", calories: 250, unit: "g", unitWeight: 100 },
+            { name: "Pollo (ala)", calories: 203, unit: "g", unitWeight: 50 },
+            { name: "Pavo (pechuga)", calories: 135, unit: "g", unitWeight: 150 },
+            { name: "Pavo (muslo)", calories: 144, unit: "g", unitWeight: 120 },
             { name: "Pavo molido magro", calories: 120, unit: "g" },
             { name: "Carne de res magra", calories: 250, unit: "g" },
             { name: "Carne molida 90% magra", calories: 176, unit: "g" },
@@ -597,18 +614,18 @@
             { name: "Calamar", calories: 175, unit: "g" },
             
             // Huevos - todas las preparaciones fitness
-            { name: "Huevo entero crudo", calories: 155, unit: "g" },
-            { name: "Huevo entero cocido", calories: 155, unit: "g" },
-            { name: "Clara de huevo", calories: 52, unit: "g" },
-            { name: "Clara de huevo cocida", calories: 52, unit: "g" },
-            { name: "Yema de huevo", calories: 322, unit: "g" },
-            { name: "Huevo hervido", calories: 155, unit: "g" },
-            { name: "Huevo escalfado", calories: 143, unit: "g" },
-            { name: "Huevo frito (poco aceite)", calories: 196, unit: "g" },
-            { name: "Tortilla francesa", calories: 154, unit: "g" },
-            { name: "Revuelto de huevos", calories: 168, unit: "g" },
-            { name: "Claras batidas", calories: 52, unit: "g" },
-            { name: "Huevo de codorniz", calories: 158, unit: "g" },
+            { name: "Huevo entero crudo", calories: 155, unit: "g", unitWeight: 60 },
+            { name: "Huevo entero cocido", calories: 155, unit: "g", unitWeight: 60 },
+            { name: "Clara de huevo", calories: 52, unit: "g", unitWeight: 33 },
+            { name: "Clara de huevo cocida", calories: 52, unit: "g", unitWeight: 33 },
+            { name: "Yema de huevo", calories: 322, unit: "g", unitWeight: 17 },
+            { name: "Huevo hervido", calories: 155, unit: "g", unitWeight: 60 },
+            { name: "Huevo escalfado", calories: 143, unit: "g", unitWeight: 60 },
+            { name: "Huevo frito (poco aceite)", calories: 196, unit: "g", unitWeight: 65 },
+            { name: "Tortilla francesa", calories: 154, unit: "g", unitWeight: 120 },
+            { name: "Revuelto de huevos", calories: 168, unit: "g", unitWeight: 100 },
+            { name: "Claras batidas", calories: 52, unit: "g", unitWeight: 33 },
+            { name: "Huevo de codorniz", calories: 158, unit: "g", unitWeight: 12 },
             
             // Lácteos y alternativas
             { name: "Leche entera", calories: 61, unit: "ml" },
@@ -642,13 +659,13 @@
             { name: "Cebolla", calories: 40, unit: "g" },
             
             // Frutas
-            { name: "Manzana", calories: 52, unit: "g" },
-            { name: "Plátano", calories: 89, unit: "g" },
-            { name: "Naranja", calories: 47, unit: "g" },
-            { name: "Fresa", calories: 32, unit: "g" },
-            { name: "Uva", calories: 67, unit: "g" },
-            { name: "Aguacate", calories: 160, unit: "g" },
-            { name: "Kiwi", calories: 61, unit: "g" },
+            { name: "Manzana", calories: 52, unit: "g", unitWeight: 150 },
+            { name: "Plátano", calories: 89, unit: "g", unitWeight: 120 },
+            { name: "Naranja", calories: 47, unit: "g", unitWeight: 170 },
+            { name: "Fresa", calories: 32, unit: "g", unitWeight: 12 },
+            { name: "Uva", calories: 67, unit: "g", unitWeight: 5 },
+            { name: "Aguacate", calories: 160, unit: "g", unitWeight: 200 },
+            { name: "Kiwi", calories: 61, unit: "g", unitWeight: 70 },
             
             // Frutos secos y aceites
             { name: "Almendras", calories: 579, unit: "g" },
@@ -712,13 +729,13 @@
             { name: "Berenjena", calories: 25, unit: "g" },
             
             // Frutas fitness adicionales
-            { name: "Arándanos", calories: 57, unit: "g" },
-            { name: "Frambuesas", calories: 52, unit: "g" },
-            { name: "Moras", calories: 43, unit: "g" },
-            { name: "Granada", calories: 83, unit: "g" },
-            { name: "Papaya", calories: 43, unit: "g" },
-            { name: "Piña", calories: 50, unit: "g" },
-            { name: "Mango", calories: 60, unit: "g" },
+            { name: "Arándanos", calories: 57, unit: "g", unitWeight: 150 },
+            { name: "Frambuesas", calories: 52, unit: "g", unitWeight: 125 },
+            { name: "Moras", calories: 43, unit: "g", unitWeight: 140 },
+            { name: "Granada", calories: 83, unit: "g", unitWeight: 280 },
+            { name: "Papaya", calories: 43, unit: "g", unitWeight: 500 },
+            { name: "Piña", calories: 50, unit: "g", unitWeight: 200 },
+            { name: "Mango", calories: 60, unit: "g", unitWeight: 200 },
             { name: "Coco rallado", calories: 354, unit: "g" },
             
             // Lácteos y alternativas
@@ -985,6 +1002,37 @@
         }
         
         // ===========================================
+        // FUNCIONES DE MEDIDAS Y UNIDADES
+        // ===========================================
+        
+        /**
+         * Actualiza la interfaz según el tipo de medida seleccionado
+         */
+        function updateMeasureType() {
+            const measureType = document.getElementById('measureType').value;
+            const unitLabel = document.getElementById('unitLabel');
+            const amountHelp = document.getElementById('amountHelp');
+            const foodAmount = document.getElementById('foodAmount');
+            const foodIndex = document.getElementById('foodSelect').value;
+            
+            if (measureType === 'units' && foodIndex && filteredFoods[foodIndex] && filteredFoods[foodIndex].unitWeight) {
+                const selectedFood = filteredFoods[foodIndex];
+                unitLabel.textContent = 'unidad(es)';
+                amountHelp.innerHTML = `1 unidad = ${selectedFood.unitWeight}${selectedFood.unit} aprox.`;
+                foodAmount.placeholder = '1';
+                foodAmount.max = '50'; // Máximo 50 unidades
+                foodAmount.step = '1';
+            } else {
+                const selectedFood = foodIndex && filteredFoods[foodIndex] ? filteredFoods[foodIndex] : { unit: 'g' };
+                unitLabel.textContent = selectedFood.unit;
+                amountHelp.innerHTML = `Cantidad en ${selectedFood.unit === 'ml' ? 'mililitros' : 'gramos'}`;
+                foodAmount.placeholder = '100';
+                foodAmount.max = '2000';
+                foodAmount.step = selectedFood.unit === 'ml' ? '50' : '1';
+            }
+        }
+        
+        // ===========================================
         // FUNCIONES DE GESTIÓN DE COMIDAS
         // ===========================================
         
@@ -994,6 +1042,7 @@
         function addFoodToMeal() {
             const foodIndex = document.getElementById('foodSelect').value;
             const amount = parseFloat(document.getElementById('foodAmount').value);
+            const measureType = document.getElementById('measureType').value;
             
             if (!foodIndex || !amount || amount <= 0) {
                 alert('Por favor selecciona un alimento y especifica una cantidad válida');
@@ -1001,12 +1050,28 @@
             }
             
             const selectedFood = filteredFoods[foodIndex];
-            const calories = Math.round((selectedFood.calories / 100) * amount);
+            let finalAmount, finalUnit, displayText;
+            
+            // Calcular cantidad final según tipo de medida
+            if (measureType === 'units' && selectedFood.unitWeight) {
+                // Convertir unidades a gramos/ml para el cálculo
+                finalAmount = amount * selectedFood.unitWeight;
+                finalUnit = selectedFood.unit;
+                displayText = `${amount} unidad${amount !== 1 ? 'es' : ''} (${finalAmount}${finalUnit})`;
+            } else {
+                // Usar la cantidad directamente en gramos/ml
+                finalAmount = amount;
+                finalUnit = selectedFood.unit;
+                displayText = `${amount}${finalUnit}`;
+            }
+            
+            const calories = Math.round((selectedFood.calories / 100) * finalAmount);
             
             const foodItem = {
                 name: selectedFood.name,
-                amount: amount,
-                unit: selectedFood.unit,
+                amount: finalAmount,
+                unit: finalUnit,
+                displayText: displayText,
                 calories: calories,
                 id: Date.now() // ID único basado en timestamp
             };
@@ -1018,6 +1083,8 @@
             // Limpiar formulario
             document.getElementById('foodSelect').value = '';
             document.getElementById('foodAmount').value = '';
+            document.getElementById('measureType').value = 'grams';
+            updateMeasureType();
         }
         
         /**
@@ -1045,7 +1112,7 @@
                 foodElement.innerHTML = `
                     <div>
                         <strong>${food.name}</strong><br>
-                        <small class="text-muted">${food.amount}${food.unit} • ${food.calories} kcal</small>
+                        <small class="text-muted">${food.displayText || (food.amount + food.unit)} • ${food.calories} kcal</small>
                     </div>
                     <button class="btn btn-sm btn-outline-danger" onclick="removeFoodFromMeal(${food.id})">
                         <i class="bi bi-trash"></i>
@@ -1293,12 +1360,34 @@
             document.getElementById('foodSelect').addEventListener('change', function() {
                 const foodIndex = this.value;
                 const unitLabel = document.getElementById('unitLabel');
+                const measureType = document.getElementById('measureType');
+                const measureHelp = document.getElementById('measureHelp');
+                const amountHelp = document.getElementById('amountHelp');
                 
                 if (foodIndex && filteredFoods[foodIndex]) {
-                    unitLabel.textContent = filteredFoods[foodIndex].unit;
+                    const selectedFood = filteredFoods[foodIndex];
+                    unitLabel.textContent = selectedFood.unit;
+                    
+                    // Habilitar opción de unidades si el alimento tiene peso unitario
+                    const unitsOption = measureType.querySelector('option[value="units"]');
+                    if (selectedFood.unitWeight) {
+                        unitsOption.disabled = false;
+                        unitsOption.textContent = `Por Unidades (1 unidad ≈ ${selectedFood.unitWeight}${selectedFood.unit})`;
+                        measureHelp.innerHTML = `✅ Este alimento se puede medir por unidades o por ${selectedFood.unit}`;
+                    } else {
+                        unitsOption.disabled = true;
+                        unitsOption.textContent = 'Por Unidades (no disponible)';
+                        measureHelp.innerHTML = `⚠️ Este alimento solo se puede medir por ${selectedFood.unit}`;
+                        measureType.value = 'grams'; // Forzar a gramos si no hay peso unitario
+                    }
                 } else {
                     unitLabel.textContent = 'g';
+                    measureType.querySelector('option[value="units"]').disabled = true;
+                    measureType.value = 'grams';
+                    measureHelp.innerHTML = 'Selecciona cómo quieres medir el alimento';
                 }
+                
+                updateMeasureType(); // Actualizar interfaz según tipo seleccionado
             });
             
             // Event listener para agregar alimento
@@ -1322,6 +1411,9 @@
                 filteredFoods = [...foodDatabase];
                 updateFoodSelect();
             });
+            
+            // Event listener para cambio de tipo de medida
+            document.getElementById('measureType').addEventListener('change', updateMeasureType);
             
             // Event listener para cargar historial al cambiar a la pestaña
             document.getElementById('history-tab').addEventListener('shown.bs.tab', loadHistory);
