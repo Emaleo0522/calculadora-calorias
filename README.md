@@ -10,7 +10,7 @@ Una aplicación web completa para calcular tu Tasa Metabólica Basal (TMB) y reg
 - Muestra calorías diarias recomendadas y objetivos de peso
 
 ### 🍽️ Registro de Alimentos
-- Base de datos con 50+ alimentos y bebidas comunes
+- Base de datos con 120+ alimentos y bebidas fitness
 - Búsqueda inteligente en tiempo real
 - Cálculo automático de calorías por porción
 - Gestión de comidas con totales calóricos
@@ -57,15 +57,18 @@ Esta aplicación está optimizada para deployment en:
 
 ## 📊 Base de Datos de Alimentos
 
-Incluye más de 50 alimentos categorizados:
-- Carnes y pescados (8 items)
-- Huevos y lácteos (8 items)
-- Cereales y legumbres (8 items)
-- Verduras y hortalizas (8 items)
-- Frutas (7 items)
-- Frutos secos y aceites (4 items)
-- Bebidas (7 items)
-- Dulces y snacks (3 items)
+Incluye más de 120 alimentos categorizados:
+- **Carnes y pescados** (10 items): Pollo, pavo, res, cerdo, salmón, atún, sardinas, merluza
+- **Huevos y lácteos** (10 items): Huevos, leches, yogures, quesos, kéfir, alternativas vegetales
+- **Cereales y legumbres** (12 items): Arroz, pasta, avena, quinoa, lentejas, garbanzos, amaranto
+- **Verduras y hortalizas** (15 items): Brócoli, espinacas, kale, rúcula, pimientos, calabacín
+- **Frutas** (15 items): Manzana, plátano, bayas, cítricos, frutas tropicales
+- **Frutos secos y semillas** (12 items): Almendras, nueces, chía, linaza, calabaza, girasol
+- **Superalimentos fitness** (25 items): Mantequillas de frutos secos, proteína en polvo, spirulina
+- **Aceites y grasas saludables** (8 items): Oliva, coco, aguacate, ghee
+- **Bebidas** (12 items): Agua, café, tés, agua de coco, kombucha, leches vegetales
+- **Especias y condimentos** (8 items): Cúrcuma, jengibre, canela, levadura nutricional
+- **Snacks saludables** (8 items): Hummus, guacamole, barritas proteína, mix frutos secos
 
 ## 🔧 Instalación Local
 
