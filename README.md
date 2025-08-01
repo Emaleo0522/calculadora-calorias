@@ -10,7 +10,7 @@ Una aplicación web completa para calcular tu Tasa Metabólica Basal (TMB) y reg
 - Muestra calorías diarias recomendadas y objetivos de peso
 
 ### 🍽️ Registro de Alimentos
-- Base de datos con 120+ alimentos y bebidas fitness
+- Base de datos con 200+ alimentos y bebidas fitness
 - Búsqueda inteligente en tiempo real
 - Cálculo automático de calorías por porción
 - Gestión de comidas con totales calóricos
@@ -57,18 +57,43 @@ Esta aplicación está optimizada para deployment en:
 
 ## 📊 Base de Datos de Alimentos
 
-Incluye más de 120 alimentos categorizados:
-- **Carnes y pescados** (10 items): Pollo, pavo, res, cerdo, salmón, atún, sardinas, merluza
-- **Huevos y lácteos** (10 items): Huevos, leches, yogures, quesos, kéfir, alternativas vegetales
-- **Cereales y legumbres** (12 items): Arroz, pasta, avena, quinoa, lentejas, garbanzos, amaranto
-- **Verduras y hortalizas** (15 items): Brócoli, espinacas, kale, rúcula, pimientos, calabacín
-- **Frutas** (15 items): Manzana, plátano, bayas, cítricos, frutas tropicales
-- **Frutos secos y semillas** (12 items): Almendras, nueces, chía, linaza, calabaza, girasol
-- **Superalimentos fitness** (25 items): Mantequillas de frutos secos, proteína en polvo, spirulina
-- **Aceites y grasas saludables** (8 items): Oliva, coco, aguacate, ghee
-- **Bebidas** (12 items): Agua, café, tés, agua de coco, kombucha, leches vegetales
-- **Especias y condimentos** (8 items): Cúrcuma, jengibre, canela, levadura nutricional
-- **Snacks saludables** (8 items): Hummus, guacamole, barritas proteína, mix frutos secos
+Incluye más de **200 alimentos especializados en fitness** categorizados:
+
+### 🥩 **Proteínas Animales** (35+ items):
+- **Carnes:** Pollo (5 cortes), pavo, res, cerdo, cordero, jamón
+- **Pescados:** Salmón, atún, sardinas, merluza, bacalao, tilapia, caballa, trucha
+- **Mariscos:** Camarones, langostinos, cangrejo, mejillones, almejas, pulpo, calamar
+- **Huevos:** Crudo, cocido, claras, yemas, escalfado, frito, revuelto, codorniz
+
+### 🌱 **Proteínas Vegetales & Suplementos** (15+ items):
+- **Proteínas en polvo:** Whey, caseína, soja, guisante
+- **Suplementos:** Creatina, BCAA, glutamina, colágeno
+- **Vegetales:** Tofu, tempeh, seitan
+
+### 🥤 **Batidos y Licuados Fitness** (12+ items):
+- Batidos proteicos, smoothies verdes, post-entreno, detox
+- Licuados de plátano-maní, berries, tropical, avena-canela
+
+### 🍯 **Preparaciones Fitness** (10+ items):
+- Tortitas de avena, pancakes proteicos, overnight oats
+- Bowl de açaí, pudding de chía, energy balls
+
+### 🥛 **Bebidas Deportivas** (15+ items):
+- Isotónicas, hipotónicas, hipertónicas, electrolitos
+- Tés, kombucha, agua de coco, leches vegetales
+
+### 🥗 **Carbohidratos y Vegetales** (50+ items):
+- **Cereales:** Quinoa, avena, amaranto, trigo sarraceno, mijo
+- **Verduras fitness:** Kale, espinacas, rúcula, brócoli, pimientos
+- **Frutas antioxidantes:** Berries, granada, papaya, piña
+
+### 🌰 **Grasas Saludables** (25+ items):
+- **Frutos secos y semillas:** Chía, linaza, calabaza, girasol, sésamo
+- **Mantequillas:** Maní, almendra naturales
+- **Aceites:** Coco, aguacate, oliva, ghee
+
+### 🧂 **Superalimentos y Especias** (15+ items):
+- Cúrcuma, jengibre, espirulina, levadura nutricional, canela
 
 ## 🔧 Instalación Local
 

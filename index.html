@@ -555,20 +555,65 @@
          * Cada objeto contiene: nombre, calorías por 100g/ml, unidad de medida
          */
         const foodDatabase = [
-            // Carnes y pescados
+            // Carnes y aves - variadas preparaciones
             { name: "Pollo (pechuga sin piel)", calories: 165, unit: "g" },
+            { name: "Pollo (pechuga con piel)", calories: 197, unit: "g" },
+            { name: "Pollo (muslo sin piel)", calories: 183, unit: "g" },
             { name: "Pollo (muslo con piel)", calories: 250, unit: "g" },
+            { name: "Pollo (ala)", calories: 203, unit: "g" },
+            { name: "Pavo (pechuga)", calories: 135, unit: "g" },
+            { name: "Pavo (muslo)", calories: 144, unit: "g" },
+            { name: "Pavo molido magro", calories: 120, unit: "g" },
             { name: "Carne de res magra", calories: 250, unit: "g" },
+            { name: "Carne molida 90% magra", calories: 176, unit: "g" },
+            { name: "Carne molida 80% magra", calories: 254, unit: "g" },
+            { name: "Bistec de res magro", calories: 271, unit: "g" },
             { name: "Cerdo magro", calories: 242, unit: "g" },
-            { name: "Salmón", calories: 208, unit: "g" },
-            { name: "Atún en lata", calories: 132, unit: "g" },
-            { name: "Sardinas", calories: 208, unit: "g" },
-            { name: "Merluza", calories: 90, unit: "g" },
+            { name: "Chuleta de cerdo", calories: 231, unit: "g" },
+            { name: "Jamón magro", calories: 145, unit: "g" },
+            { name: "Cordero magro", calories: 294, unit: "g" },
             
-            // Huevos y lácteos
-            { name: "Huevo entero", calories: 155, unit: "g" },
+            // Pescados y mariscos - amplía la variedad
+            { name: "Salmón", calories: 208, unit: "g" },
+            { name: "Salmón ahumado", calories: 117, unit: "g" },
+            { name: "Atún fresco", calories: 144, unit: "g" },
+            { name: "Atún en lata (agua)", calories: 132, unit: "g" },
+            { name: "Atún en lata (aceite)", calories: 198, unit: "g" },
+            { name: "Sardinas", calories: 208, unit: "g" },
+            { name: "Sardinas en lata", calories: 208, unit: "g" },
+            { name: "Merluza", calories: 90, unit: "g" },
+            { name: "Bacalao", calories: 105, unit: "g" },
+            { name: "Tilapia", calories: 96, unit: "g" },
+            { name: "Caballa", calories: 305, unit: "g" },
+            { name: "Trucha", calories: 148, unit: "g" },
+            { name: "Dorada", calories: 96, unit: "g" },
+            { name: "Lubina", calories: 97, unit: "g" },
+            { name: "Camarones", calories: 99, unit: "g" },
+            { name: "Langostinos", calories: 106, unit: "g" },
+            { name: "Cangrejo", calories: 97, unit: "g" },
+            { name: "Mejillones", calories: 172, unit: "g" },
+            { name: "Almejas", calories: 148, unit: "g" },
+            { name: "Pulpo", calories: 164, unit: "g" },
+            { name: "Calamar", calories: 175, unit: "g" },
+            
+            // Huevos - todas las preparaciones fitness
+            { name: "Huevo entero crudo", calories: 155, unit: "g" },
+            { name: "Huevo entero cocido", calories: 155, unit: "g" },
+            { name: "Clara de huevo", calories: 52, unit: "g" },
+            { name: "Clara de huevo cocida", calories: 52, unit: "g" },
+            { name: "Yema de huevo", calories: 322, unit: "g" },
+            { name: "Huevo hervido", calories: 155, unit: "g" },
+            { name: "Huevo escalfado", calories: 143, unit: "g" },
+            { name: "Huevo frito (poco aceite)", calories: 196, unit: "g" },
+            { name: "Tortilla francesa", calories: 154, unit: "g" },
+            { name: "Revuelto de huevos", calories: 168, unit: "g" },
+            { name: "Claras batidas", calories: 52, unit: "g" },
+            { name: "Huevo de codorniz", calories: 158, unit: "g" },
+            
+            // Lácteos y alternativas
             { name: "Leche entera", calories: 61, unit: "ml" },
             { name: "Leche desnatada", calories: 34, unit: "ml" },
+            { name: "Leche semidesnatada", calories: 49, unit: "ml" },
             { name: "Yogur natural", calories: 59, unit: "g" },
             { name: "Yogur desnatado", calories: 56, unit: "g" },
             { name: "Queso fresco", calories: 174, unit: "g" },
@@ -707,7 +752,49 @@
             { name: "Hummus", calories: 166, unit: "g" },
             { name: "Guacamole", calories: 160, unit: "g" },
             { name: "Barritas de proteína", calories: 400, unit: "g" },
-            { name: "Mix de frutos secos", calories: 607, unit: "g" }
+            { name: "Mix de frutos secos", calories: 607, unit: "g" },
+            
+            // Batidos y licuados fitness
+            { name: "Batido proteico básico", calories: 120, unit: "ml" },
+            { name: "Smoothie verde (espinaca+plátano)", calories: 95, unit: "ml" },
+            { name: "Batido de proteína y avena", calories: 150, unit: "ml" },
+            { name: "Smoothie de berries", calories: 85, unit: "ml" },
+            { name: "Batido post-entreno", calories: 180, unit: "ml" },
+            { name: "Licuado de plátano y maní", calories: 200, unit: "ml" },
+            { name: "Smoothie tropical", calories: 110, unit: "ml" },
+            { name: "Batido de claras y frutas", calories: 90, unit: "ml" },
+            { name: "Smoothie de cacao y plátano", calories: 130, unit: "ml" },
+            { name: "Batido verde detox", calories: 70, unit: "ml" },
+            { name: "Licuado de avena y canela", calories: 140, unit: "ml" },
+            { name: "Batido de yogur griego", calories: 110, unit: "ml" },
+            
+            // Preparaciones fitness adicionales
+            { name: "Tortitas de avena", calories: 158, unit: "g" },
+            { name: "Pancakes proteicos", calories: 180, unit: "g" },
+            { name: "Bowl de açaí", calories: 211, unit: "g" },
+            { name: "Pudding de chía", calories: 150, unit: "g" },
+            { name: "Overnight oats", calories: 150, unit: "g" },
+            { name: "Ensalada de quinoa", calories: 120, unit: "g" },
+            { name: "Bowl de smoothie", calories: 180, unit: "g" },
+            { name: "Muesli casero", calories: 367, unit: "g" },
+            { name: "Granola casera", calories: 471, unit: "g" },
+            { name: "Energy balls", calories: 420, unit: "g" },
+            
+            // Suplementos y polvos comunes
+            { name: "Creatina monohidrato", calories: 0, unit: "g" },
+            { name: "BCAA en polvo", calories: 10, unit: "g" },
+            { name: "Glutamina en polvo", calories: 15, unit: "g" },
+            { name: "Colágeno hidrolizado", calories: 50, unit: "g" },
+            { name: "Proteína de caseína", calories: 380, unit: "g" },
+            { name: "Proteína de soja", calories: 390, unit: "g" },
+            { name: "Proteína de guisante", calories: 385, unit: "g" },
+            
+            // Bebidas isotónicas y deportivas
+            { name: "Bebida isotónica", calories: 25, unit: "ml" },
+            { name: "Bebida hipotónica", calories: 15, unit: "ml" },
+            { name: "Bebida hipertónica", calories: 45, unit: "ml" },
+            { name: "Suero casero", calories: 20, unit: "ml" },
+            { name: "Agua con electrolitos", calories: 5, unit: "ml" }
         ];
         
         // ===========================================
