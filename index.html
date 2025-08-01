@@ -403,22 +403,48 @@
                                     <p class="text-muted">Busca y agrega alimentos para calcular el total calórico de tu comida</p>
                                 </div>
                                 
+                                <!-- Instrucciones de uso -->
+                                <div class="alert alert-info d-flex align-items-center mb-4" role="alert">
+                                    <i class="bi bi-lightbulb-fill me-3" style="font-size: 1.5rem;"></i>
+                                    <div>
+                                        <h6 class="alert-heading mb-1">💡 ¿Cómo funciona el filtro?</h6>
+                                        <p class="mb-0">
+                                            <strong>1.</strong> Escribe en "Filtrar Alimentos" (ej: "pollo") → 
+                                            <strong>2.</strong> La lista de abajo se filtra automáticamente → 
+                                            <strong>3.</strong> Selecciona el alimento específico que quieres
+                                        </p>
+                                    </div>
+                                </div>
+                                
                                 <!-- Búsqueda de alimentos -->
                                 <div class="row mb-4">
                                     <div class="col-md-6 mb-3">
                                         <label for="foodSearch" class="form-label fw-semibold">
-                                            <i class="bi bi-search me-2"></i>Buscar Alimento o Bebida
+                                            <i class="bi bi-search me-2"></i>Filtrar Alimentos
                                         </label>
-                                        <input type="text" class="form-control form-control-lg" id="foodSearch" placeholder="Completa para filtrar la lista">
+                                        <div class="input-group input-group-lg">
+                                            <input type="text" class="form-control" id="foodSearch" placeholder="Ej: pollo, quinoa, pasta...">
+                                            <button class="btn btn-outline-secondary" type="button" id="clearSearchBtn" title="Limpiar filtro">
+                                                <i class="bi bi-x-lg"></i>
+                                            </button>
+                                        </div>
+                                        <div class="form-text">
+                                            <i class="bi bi-info-circle me-1"></i>
+                                            <strong>Tip:</strong> El texto que escribas filtrará la lista de abajo. Si escribes "pollo", solo verás alimentos que contengan esa palabra.
+                                        </div>
                                     </div>
                                     
                                     <div class="col-md-6 mb-3">
                                         <label for="foodSelect" class="form-label fw-semibold">
-                                            <i class="bi bi-list me-2"></i>Seleccionar Alimento
+                                            <i class="bi bi-list me-2"></i>Seleccionar de la Lista Filtrada
+                                            <span class="badge bg-secondary ms-2" id="resultsCount">120+ alimentos</span>
                                         </label>
                                         <select class="form-select form-select-lg" id="foodSelect">
                                             <option value="">Cargando alimentos...</option>
                                         </select>
+                                        <div class="form-text" id="searchHelp">
+                                            👆 Aquí aparecerán solo los alimentos que coincidan con tu búsqueda
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -834,6 +860,8 @@
          */
         function updateFoodSelect() {
             const foodSelect = document.getElementById('foodSelect');
+            const resultsCount = document.getElementById('resultsCount');
+            const searchHelp = document.getElementById('searchHelp');
             
             if (!foodSelect) {
                 return;
@@ -841,12 +869,26 @@
             
             foodSelect.innerHTML = '';
             
+            // Actualizar contador de resultados
             if (filteredFoods.length === 0) {
-                foodSelect.innerHTML = '<option value="">No se encontraron alimentos</option>';
+                foodSelect.innerHTML = '<option value="">❌ No se encontraron alimentos</option>';
+                resultsCount.textContent = '0 resultados';
+                resultsCount.className = 'badge bg-danger ms-2';
+                searchHelp.innerHTML = '🔍 Prueba con otros términos como "arroz", "pollo", "yogur"';
                 return;
             }
             
-            foodSelect.innerHTML = '<option value="">Selecciona un alimento</option>';
+            // Mostrar resultados encontrados
+            resultsCount.textContent = `${filteredFoods.length} encontrados`;
+            resultsCount.className = 'badge bg-success ms-2';
+            
+            if (filteredFoods.length === foodDatabase.length) {
+                searchHelp.innerHTML = '📋 Mostrando todos los alimentos disponibles';
+            } else {
+                searchHelp.innerHTML = `✅ Lista filtrada - ${filteredFoods.length} alimentos coinciden con tu búsqueda`;
+            }
+            
+            foodSelect.innerHTML = '<option value="">👆 Selecciona un alimento de la lista filtrada</option>';
             filteredFoods.forEach((food, index) => {
                 const option = document.createElement('option');
                 option.value = index;
@@ -1145,8 +1187,14 @@
             // Event listener para búsqueda de alimentos
             document.getElementById('foodSearch').addEventListener('input', function(e) {
                 const searchTerm = e.target.value.trim();
+                const searchHelp = document.getElementById('searchHelp');
+                
                 if (searchTerm.length >= 1) {
                     filterFoods(searchTerm);
+                    // Mostrar feedback mientras se escribe
+                    if (searchTerm.length < 3) {
+                        searchHelp.innerHTML = `🔤 Escribiendo "${searchTerm}"... La lista se filtra en tiempo real`;
+                    }
                 } else {
                     // Si no hay texto de búsqueda, mostrar todos los alimentos
                     filteredFoods = [...foodDatabase];
@@ -1180,6 +1228,13 @@
             
             // Event listener para limpiar historial
             document.getElementById('clearHistoryBtn').addEventListener('click', clearAllHistory);
+            
+            // Event listener para limpiar filtro de búsqueda
+            document.getElementById('clearSearchBtn').addEventListener('click', function() {
+                document.getElementById('foodSearch').value = '';
+                filteredFoods = [...foodDatabase];
+                updateFoodSelect();
+            });
             
             // Event listener para cargar historial al cambiar a la pestaña
             document.getElementById('history-tab').addEventListener('shown.bs.tab', loadHistory);
