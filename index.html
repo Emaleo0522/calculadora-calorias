@@ -39,21 +39,27 @@
             line-height: 1.6;
         }
         
-        /* Layout principal con sidebars para publicidad */
+        /* Layout principal con CSS Grid (más confiable) */
         .main-layout {
-            display: flex;
-            flex-wrap: nowrap;
+            display: grid;
+            grid-template-columns: 160px 1fr 160px;
             gap: 20px;
             max-width: 1400px;
             margin: 0 auto;
-            align-items: flex-start;
             width: 100%;
         }
         
         /* Sidebars para publicidad */
         .ad-sidebar {
             width: 160px;
-            flex-shrink: 0;
+        }
+        
+        .ad-sidebar.left {
+            grid-column: 1;
+        }
+        
+        .ad-sidebar.right {
+            grid-column: 3;
         }
         
         /* Contenedor principal con efecto glassmorphism */
@@ -63,9 +69,7 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            flex: 1;
-            min-width: 0;
-            max-width: calc(100% - 360px); /* Reservar espacio para los sidebars */
+            grid-column: 2;
         }
         
         /* Estilos para los anuncios */
@@ -103,25 +107,23 @@
             opacity: 0.5;
         }
         
-        /* Responsive: ocultar sidebars en pantallas medianas y pequeñas */
+        /* Responsive: cambiar a layout de 1 columna en pantallas pequeñas */
         @media (max-width: 1399.98px) {
+            .main-layout {
+                display: block !important;
+                max-width: 1000px;
+            }
+            
             .ad-sidebar {
                 display: none !important;
             }
-            
-            .main-layout {
-                justify-content: center;
-            }
-            
-            .main-container {
-                max-width: 1000px;
-            }
         }
         
-        /* Asegurar que en pantallas grandes haya espacio suficiente */
+        /* En pantallas grandes, asegurar grid de 3 columnas */
         @media (min-width: 1400px) {
             .main-layout {
-                min-width: 1360px; /* 160 + 20 + 960 + 20 + 160 */
+                display: grid;
+                grid-template-columns: 160px 1fr 160px;
             }
         }
         
@@ -346,7 +348,7 @@
     <div class="container-fluid py-4">
         <div class="main-layout">
             <!-- Sidebar izquierdo para publicidad -->
-            <div class="ad-sidebar">
+            <div class="ad-sidebar left">
                 <div class="ad-banner">
                     <div class="ad-placeholder">
                         <i class="bi bi-badge-ad"></i>
@@ -657,7 +659,7 @@
             </div>
             
             <!-- Sidebar derecho para publicidad -->
-            <div class="ad-sidebar">
+            <div class="ad-sidebar right">
                 <div class="ad-banner">
                     <div class="ad-placeholder">
                         <i class="bi bi-bullseye"></i>
