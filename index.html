@@ -39,13 +39,10 @@
             line-height: 1.6;
         }
         
-        /* Layout principal con sidebar derecho único */
+        /* Layout principal simplificado - solo contenido */
         .main-layout {
-            display: flex;
-            gap: 20px;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            align-items: flex-start;
         }
         
         /* Contenedor principal con efecto glassmorphism */
@@ -55,20 +52,22 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            flex: 1;
-            min-width: 0;
         }
         
-        /* Sidebar derecho para publicidad */
+        /* Sidebar derecho con posicionamiento fijo */
         .ad-sidebar {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             width: 160px;
-            flex-shrink: 0;
+            z-index: 1000;
         }
         
-        /* Estilos para los anuncios */
+        /* Estilos para los anuncios con posicionamiento fijo */
         .ad-banner {
             width: 160px;
-            height: 600px;
+            height: 280px; /* Altura reducida para que quepan 2 */
             background: linear-gradient(145deg, #f8f9fa, #e9ecef);
             border-radius: 15px;
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -79,14 +78,17 @@
             color: #6c757d;
             font-size: 0.9rem;
             text-align: center;
-            position: sticky;
-            top: 20px;
             transition: all 0.3s ease;
             margin-bottom: 20px;
         }
         
         .ad-banner:last-child {
             margin-bottom: 0;
+        }
+        
+        .ad-banner:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
         
         .ad-banner:hover {
@@ -106,21 +108,23 @@
         }
         
         /* Responsive: ocultar sidebar en pantallas pequeñas */
-        @media (max-width: 1199.98px) {
+        @media (max-width: 1399.98px) {
             .ad-sidebar {
                 display: none !important;
             }
-            
-            .main-layout {
-                max-width: 1000px;
-                justify-content: center;
+        }
+        
+        /* Asegurar que en pantallas muy grandes no se pegue demasiado al borde */
+        @media (min-width: 1600px) {
+            .ad-sidebar {
+                right: calc((100vw - 1400px) / 2 + 20px);
             }
         }
         
-        /* En pantallas medianas, reducir max-width */
-        @media (min-width: 1200px) and (max-width: 1399.98px) {
-            .main-layout {
-                max-width: 1000px;
+        /* Para pantallas medianas, posicionar cerca del contenido */
+        @media (min-width: 1400px) and (max-width: 1599px) {
+            .ad-sidebar {
+                right: 20px;
             }
         }
         
@@ -341,10 +345,9 @@
     </style>
 </head>
 <body>
-    <!-- Contenedor principal de la aplicación con sidebars publicitarios -->
+    <!-- Contenedor principal de la aplicación -->
     <div class="container-fluid py-4">
         <div class="main-layout">
-            <!-- Contenedor principal del contenido -->
             <div class="main-container p-4">
                     
                     <!-- Encabezado principal -->
@@ -641,25 +644,24 @@
                 </div>
             </div>
             
-            <!-- Contenedor principal del contenido cierra -->
             </div>
-            
-            <!-- Sidebar derecho para publicidad (2 banners) -->
-            <div class="ad-sidebar d-none d-xl-block">
-                <div class="ad-banner">
-                    <div class="ad-placeholder">
-                        <i class="bi bi-badge-ad"></i>
-                        <div>Espacio Publicitario #1</div>
-                        <small>160x600</small>
-                    </div>
-                </div>
-                <div class="ad-banner">
-                    <div class="ad-placeholder">
-                        <i class="bi bi-bullseye"></i>
-                        <div>Espacio Publicitario #2</div>
-                        <small>160x600</small>
-                    </div>
-                </div>
+        </div>
+    </div>
+    
+    <!-- Sidebar publicitario fijo en la derecha -->
+    <div class="ad-sidebar">
+        <div class="ad-banner">
+            <div class="ad-placeholder">
+                <i class="bi bi-badge-ad"></i>
+                <div>Espacio Publicitario #1</div>
+                <small>160x280</small>
+            </div>
+        </div>
+        <div class="ad-banner">
+            <div class="ad-placeholder">
+                <i class="bi bi-bullseye"></i>
+                <div>Espacio Publicitario #2</div>
+                <small>160x280</small>
             </div>
         </div>
     </div>
