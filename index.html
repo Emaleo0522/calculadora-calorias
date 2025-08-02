@@ -42,10 +42,12 @@
         /* Layout principal con sidebars para publicidad */
         .main-layout {
             display: flex;
+            flex-wrap: nowrap;
             gap: 20px;
             max-width: 1400px;
             margin: 0 auto;
             align-items: flex-start;
+            width: 100%;
         }
         
         /* Sidebars para publicidad */
@@ -63,6 +65,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             flex: 1;
             min-width: 0;
+            max-width: calc(100% - 360px); /* Reservar espacio para los sidebars */
         }
         
         /* Estilos para los anuncios */
@@ -101,13 +104,24 @@
         }
         
         /* Responsive: ocultar sidebars en pantallas medianas y pequeñas */
-        @media (max-width: 1199.98px) {
+        @media (max-width: 1399.98px) {
+            .ad-sidebar {
+                display: none !important;
+            }
+            
             .main-layout {
                 justify-content: center;
             }
             
             .main-container {
                 max-width: 1000px;
+            }
+        }
+        
+        /* Asegurar que en pantallas grandes haya espacio suficiente */
+        @media (min-width: 1400px) {
+            .main-layout {
+                min-width: 1360px; /* 160 + 20 + 960 + 20 + 160 */
             }
         }
         
@@ -332,7 +346,7 @@
     <div class="container-fluid py-4">
         <div class="main-layout">
             <!-- Sidebar izquierdo para publicidad -->
-            <div class="ad-sidebar d-none d-lg-block">
+            <div class="ad-sidebar">
                 <div class="ad-banner">
                     <div class="ad-placeholder">
                         <i class="bi bi-badge-ad"></i>
@@ -643,7 +657,7 @@
             </div>
             
             <!-- Sidebar derecho para publicidad -->
-            <div class="ad-sidebar d-none d-lg-block">
+            <div class="ad-sidebar">
                 <div class="ad-banner">
                     <div class="ad-placeholder">
                         <i class="bi bi-bullseye"></i>
