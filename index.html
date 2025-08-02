@@ -39,6 +39,28 @@
             line-height: 1.6;
         }
         
+        /* Layout principal con sidebars para publicidad */
+        .main-layout {
+            display: flex;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Sidebars para publicidad */
+        .ad-sidebar {
+            width: 160px;
+            flex-shrink: 0;
+        }
+        
+        .ad-sidebar.left {
+            order: 1;
+        }
+        
+        .ad-sidebar.right {
+            order: 3;
+        }
+        
         /* Contenedor principal con efecto glassmorphism */
         .main-container {
             background: rgba(255, 255, 255, 0.95);
@@ -46,6 +68,70 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            flex: 1;
+            order: 2;
+            min-width: 0;
+        }
+        
+        /* Estilos para los anuncios */
+        .ad-banner {
+            width: 160px;
+            height: 600px;
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .ad-banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .ad-placeholder {
+            padding: 20px;
+            font-weight: 500;
+        }
+        
+        .ad-placeholder i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+        
+        /* Responsive: ocultar sidebars en pantallas medianas y pequeñas */
+        @media (max-width: 1199.98px) {
+            .main-layout {
+                justify-content: center;
+            }
+            
+            .main-container {
+                max-width: 1000px;
+            }
+        }
+        
+        /* En pantallas muy grandes, centrar el layout */
+        @media (min-width: 1400px) {
+            .main-layout {
+                max-width: 1600px;
+            }
+        }
+        
+        /* Asegurar que el contenido principal siempre tenga espacio suficiente */
+        @media (min-width: 1200px) {
+            .main-container {
+                min-width: 800px;
+            }
         }
         
         /* Estilos para las secciones principales */
@@ -251,11 +337,29 @@
     </style>
 </head>
 <body>
-    <!-- Contenedor principal de la aplicación -->
+    <!-- Contenedor principal de la aplicación con sidebars publicitarios -->
     <div class="container-fluid py-4">
-        <div class="row justify-content-center">
-            <div class="col-12 col-xl-10">
-                <div class="main-container p-4">
+        <div class="main-layout">
+            <!-- Sidebar izquierdo para publicidad -->
+            <div class="ad-sidebar left d-none d-lg-block">
+                <div class="ad-banner">
+                    <div class="ad-placeholder">
+                        <i class="bi bi-badge-ad"></i>
+                        <div>Espacio Publicitario</div>
+                        <small>160x600</small>
+                    </div>
+                </div>
+                <div class="ad-banner">
+                    <div class="ad-placeholder">
+                        <i class="bi bi-megaphone"></i>
+                        <div>Tu Anuncio Aquí</div>
+                        <small>160x600</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenedor principal del contenido -->
+            <div class="main-container p-4">
                     
                     <!-- Encabezado principal -->
                     <div class="text-center mb-5">
@@ -547,6 +651,27 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenedor principal del contenido cierra -->
+            </div>
+            
+            <!-- Sidebar derecho para publicidad -->
+            <div class="ad-sidebar right d-none d-lg-block">
+                <div class="ad-banner">
+                    <div class="ad-placeholder">
+                        <i class="bi bi-bullseye"></i>
+                        <div>Espacio Publicitario</div>
+                        <small>160x600</small>
+                    </div>
+                </div>
+                <div class="ad-banner">
+                    <div class="ad-placeholder">
+                        <i class="bi bi-shop"></i>
+                        <div>Tu Anuncio Aquí</div>
+                        <small>160x600</small>
                     </div>
                 </div>
             </div>
