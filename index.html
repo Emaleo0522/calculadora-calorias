@@ -19,6 +19,9 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         /* Estilos personalizados para la aplicación */
         
@@ -31,12 +34,20 @@
             --info-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
         }
         
-        /* Estilos generales del body */
+        /* Estilos generales del body con imagen de fondo fitness */
         body {
-            background: var(--primary-gradient);
+            background: 
+                linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%),
+                url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat fixed;
             min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
         }
         
         /* Layout principal centrado sin flexbox */
@@ -45,13 +56,44 @@
             margin: 0 auto;
         }
         
-        /* Contenedor principal con efecto glassmorphism */
+        /* Contenedor principal con efecto glassmorphism muy transparente */
         .main-container {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.65);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+        
+        .main-container:hover {
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+            transform: translateY(-2px);
+        }
+        
+        /* Mejorar legibilidad del texto sobre imagen */
+        .main-container h2,
+        .main-container h3,
+        .main-container label,
+        .main-container .lead {
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Sección historial extra transparente */
+        #history-section .section-card {
+            background: rgba(255, 255, 255, 0.4) !important;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        #history-section h2,
+        #history-section h3,
+        #history-section h4,
+        #history-section p,
+        #history-section label {
+            text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);
+            font-weight: 500;
         }
         
         /* Banners publicitarios integrados */
@@ -95,8 +137,39 @@
             opacity: 0.5;
         }
         
-        /* Responsive: reducir tamaño en móviles */
+        /* Título principal con efecto sutil y mejor contraste */
+        .main-title {
+            letter-spacing: -0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+        }
+        
+        .main-title:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Icono de sección con pulso sutil */
+        .section-icon {
+            font-size: 3rem;
+            color: rgba(102, 126, 234, 0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .section-icon:hover {
+            color: rgba(102, 126, 234, 1);
+            transform: scale(1.1);
+        }
+        
+        /* Responsive: optimizaciones para móviles */
         @media (max-width: 768px) {
+            /* Imagen de fondo optimizada para móvil */
+            body {
+                background: 
+                    linear-gradient(135deg, rgba(102, 126, 234, 0.4) 0%, rgba(118, 75, 162, 0.4) 100%),
+                    url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=75') center/cover no-repeat fixed;
+            }
+            
             .ad-banner-top {
                 max-width: 320px;
                 min-height: 50px;
@@ -110,6 +183,19 @@
             .ad-placeholder i {
                 font-size: 1.5rem;
                 margin-bottom: 5px;
+            }
+            
+            .main-title {
+                font-size: 2.5rem !important;
+            }
+            
+            .section-icon {
+                font-size: 2.5rem;
+            }
+            
+            .main-container {
+                margin: 10px;
+                background: rgba(255, 255, 255, 0.7);
             }
         }
         
@@ -259,18 +345,44 @@
             margin-top: 1rem;
         }
         
-        /* Historial de días */
+        /* Historial de días - extra transparente */
         .history-item {
-            background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.45) !important;
+            border: 1px solid rgba(255, 255, 255, 0.6) !important;
+            border-radius: 15px;
             padding: 1rem;
             margin-bottom: 1rem;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
         
         .history-item:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.6) !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .history-item h5,
+        .history-item p,
+        .history-item small,
+        .history-item strong,
+        .history-item .btn {
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Botones en la sección historial más transparentes */
+        #history-section .btn {
+            background: rgba(102, 126, 234, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.5) !important;
+            backdrop-filter: blur(4px);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        #history-section .btn:hover {
+            background: rgba(102, 126, 234, 0.9) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
         
         /* Navegación por pestañas personalizada */
@@ -338,7 +450,7 @@
                     <!-- Encabezado principal -->
                     <div class="text-center mb-5">
                         <i class="bi bi-calculator section-icon"></i>
-                        <h1 class="display-4 fw-bold mb-3" style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                        <h1 class="display-4 fw-bold mb-3 main-title" style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
                             Calculadora y Registro de Kilocalorías
                         </h1>
                         <p class="lead text-muted">Calcula tu TMB, registra tus comidas y lleva un control completo de tu nutrición diaria</p>
@@ -471,6 +583,42 @@
                                             <div class="glass-effect p-3 rounded">
                                                 <h6>Ganar peso</h6>
                                                 <div class="fw-bold" id="gainWeight">0 kcal</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Sección de Recomendaciones Personalizadas -->
+                                <div id="recommendationsSection" class="mt-4" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card bg-transparent border-light h-100">
+                                                <div class="card-header bg-transparent">
+                                                    <h5 id="recommendationsTitle">
+                                                        <i class="bi bi-lightbulb text-warning"></i> 
+                                                        Recomendaciones para tu Objetivo
+                                                    </h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div id="nutritionalTips">
+                                                        <!-- Se llenará dinámicamente -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card bg-transparent border-light h-100">
+                                                <div class="card-header bg-transparent">
+                                                    <h5>
+                                                        <i class="bi bi-clock text-info"></i> 
+                                                        Distribución de Comidas
+                                                    </h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div id="mealTiming">
+                                                        <!-- Se llenará dinámicamente -->
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -621,6 +769,36 @@
                                     </div>
                                 </div>
                                 
+                                <!-- Sección de estadísticas -->
+                                <div id="statisticsSection" class="mb-4" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card bg-transparent border-light">
+                                                <div class="card-header bg-transparent">
+                                                    <h5><i class="bi bi-graph-up text-success"></i> Estadísticas Generales</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div id="generalStats" class="row text-center">
+                                                        <!-- Se llenará dinámicamente -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card bg-transparent border-light">
+                                                <div class="card-header bg-transparent">
+                                                    <h5><i class="bi bi-bar-chart text-info"></i> Promedios Diarios</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div id="averageStats" class="row text-center">
+                                                        <!-- Se llenará dinámicamente -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <!-- Lista del historial -->
                                 <div id="historyList">
                                     <div class="text-center text-muted py-5">
@@ -641,6 +819,9 @@
     
     <!-- Bootstrap 5 JS desde CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- GSAP para animaciones fluidas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     
     <script>
         /**
@@ -1160,11 +1341,176 @@
             const resultCard = document.getElementById('tmbResult');
             resultCard.classList.add('show');
             
+            // Mostrar recomendaciones personalizadas
+            showPersonalizedRecommendations(results);
+            
             // Scroll suave hacia el resultado
             resultCard.scrollIntoView({ 
                 behavior: 'smooth', 
                 block: 'center' 
             });
+        }
+        
+        /**
+         * Muestra recomendaciones personalizadas según el objetivo del usuario
+         * @param {Object} results Resultados del cálculo TMB
+         */
+        function showPersonalizedRecommendations(results) {
+            const recommendationsSection = document.getElementById('recommendationsSection');
+            const nutritionalTips = document.getElementById('nutritionalTips');
+            const mealTiming = document.getElementById('mealTiming');
+            const recommendationsTitle = document.getElementById('recommendationsTitle');
+            
+            // Determinar el objetivo basado en el IMC y datos del usuario
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseInt(document.getElementById('height').value);
+            const heightInMeters = height / 100;
+            const imc = weight / (heightInMeters * heightInMeters);
+            
+            // Lógica para determinar objetivo recomendado:
+            // IMC < 18.5: Ganar peso
+            // IMC 18.5-24.9: Mantener o ligera ganancia si es muy bajo
+            // IMC > 25: Perder peso
+            const isWeightLoss = imc > 24.9 || (imc > 22 && results.tdee > 2200);
+            
+            // Configurar título y contenido según el objetivo
+            if (isWeightLoss) {
+                recommendationsTitle.innerHTML = `
+                    <i class="bi bi-arrow-down-circle text-success"></i> 
+                    Recomendaciones para Perder Peso
+                `;
+                
+                nutritionalTips.innerHTML = `
+                    <div class="mb-3">
+                        <h6 class="text-success"><i class="bi bi-check-circle"></i> Consejos Nutricionales</h6>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <small><i class="bi bi-egg text-info"></i> <strong>Proteína:</strong> 1.6-2.2g por kg de peso corporal</small>
+                            </li>
+                            <li class="mb-2">
+                                <small><i class="bi bi-droplet text-primary"></i> <strong>Grasas:</strong> 20-25% de tus calorías totales</small>
+                            </li>
+                            <li class="mb-2">
+                                <small><i class="bi bi-grain text-warning"></i> <strong>Carbohidratos:</strong> El resto de tus calorías</small>
+                            </li>
+                            <li class="mb-2">
+                                <small><i class="bi bi-cup text-primary"></i> <strong>Hidratación:</strong> 2.5-3 litros de agua al día</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-success py-2">
+                        <small><i class="bi bi-lightbulb"></i> 
+                        <strong>Tip:</strong> Crea un déficit moderado de 500 kcal/día para perder 0.5kg por semana de forma saludable.</small>
+                    </div>
+                `;
+                
+                mealTiming.innerHTML = `
+                    <div class="mb-3">
+                        <h6 class="text-info"><i class="bi bi-clock"></i> Distribución Recomendada</h6>
+                        <div class="row text-center">
+                            <div class="col-6 mb-2">
+                                <div class="bg-warning bg-opacity-10 p-2 rounded">
+                                    <small><strong>Desayuno</strong><br>25% (${Math.round((results.tdee - 500) * 0.25)} kcal)</small>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div class="bg-success bg-opacity-10 p-2 rounded">
+                                    <small><strong>Almuerzo</strong><br>35% (${Math.round((results.tdee - 500) * 0.35)} kcal)</small>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div class="bg-info bg-opacity-10 p-2 rounded">
+                                    <small><strong>Merienda</strong><br>15% (${Math.round((results.tdee - 500) * 0.15)} kcal)</small>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded">
+                                    <small><strong>Cena</strong><br>25% (${Math.round((results.tdee - 500) * 0.25)} kcal)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-info py-2">
+                        <small><i class="bi bi-clock-history"></i> 
+                        <strong>Horarios:</strong> Come cada 3-4 horas y evita cenas tardías.</small>
+                    </div>
+                `;
+            } else {
+                recommendationsTitle.innerHTML = `
+                    <i class="bi bi-arrow-up-circle text-warning"></i> 
+                    Recomendaciones para Ganar Peso
+                `;
+                
+                nutritionalTips.innerHTML = `
+                    <div class="mb-3">
+                        <h6 class="text-warning"><i class="bi bi-check-circle"></i> Consejos Nutricionales</h6>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <small><i class="bi bi-egg text-info"></i> <strong>Proteína:</strong> 1.8-2.5g por kg de peso corporal</small>
+                            </li>
+                            <li class="mb-2">
+                                <small><i class="bi bi-grain text-success"></i> <strong>Carbohidratos:</strong> 5-7g por kg de peso corporal</small>
+                            </li>
+                            <li class="mb-2">
+                                <small><i class="bi bi-droplet text-primary"></i> <strong>Grasas saludables:</strong> 25-30% de tus calorías</small>
+                            </li>
+                            <li class="mb-2">
+                                <small><i class="bi bi-cup text-primary"></i> <strong>Hidratación:</strong> 3-4 litros de agua al día</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-warning py-2">
+                        <small><i class="bi bi-lightbulb"></i> 
+                        <strong>Tip:</strong> Agrega 500 kcal/día para ganar 0.5kg por semana de masa magra.</small>
+                    </div>
+                `;
+                
+                mealTiming.innerHTML = `
+                    <div class="mb-3">
+                        <h6 class="text-info"><i class="bi bi-clock"></i> Distribución Recomendada</h6>
+                        <div class="row text-center">
+                            <div class="col-4 mb-2">
+                                <div class="bg-warning bg-opacity-10 p-2 rounded">
+                                    <small><strong>Desayuno</strong><br>25% (${Math.round((results.tdee + 500) * 0.25)} kcal)</small>
+                                </div>
+                            </div>
+                            <div class="col-4 mb-2">
+                                <div class="bg-success bg-opacity-10 p-2 rounded">
+                                    <small><strong>Almuerzo</strong><br>30% (${Math.round((results.tdee + 500) * 0.30)} kcal)</small>
+                                </div>
+                            </div>
+                            <div class="col-4 mb-2">
+                                <div class="bg-info bg-opacity-10 p-2 rounded">
+                                    <small><strong>Merienda</strong><br>20% (${Math.round((results.tdee + 500) * 0.20)} kcal)</small>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded">
+                                    <small><strong>Cena</strong><br>20% (${Math.round((results.tdee + 500) * 0.20)} kcal)</small>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div class="bg-secondary bg-opacity-10 p-2 rounded">
+                                    <small><strong>Pre-dormir</strong><br>5% (${Math.round((results.tdee + 500) * 0.05)} kcal)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-warning py-2">
+                        <small><i class="bi bi-clock-history"></i> 
+                        <strong>Horarios:</strong> Come cada 2-3 horas y incluye snack antes de dormir.</small>
+                    </div>
+                `;
+            }
+            
+            // Mostrar la sección con animación
+            recommendationsSection.style.display = 'block';
+            
+            // Animación GSAP para la entrada
+            gsap.fromTo(recommendationsSection, 
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.5 }
+            );
         }
         
         // ===========================================
@@ -1489,7 +1835,23 @@
             }
             
             const today = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
-            const totalCalories = currentMeal.reduce((sum, food) => sum + food.calories, 0);
+            
+            // Calcular totales nutricionales
+            const nutritionTotals = currentMeal.reduce((totals, food) => {
+                return {
+                    calories: totals.calories + (food.calories || 0),
+                    protein: totals.protein + (food.protein || 0),
+                    carbs: totals.carbs + (food.carbs || 0),
+                    fat: totals.fat + (food.fat || 0),
+                    fiber: totals.fiber + (food.fiber || 0),
+                    sugar: totals.sugar + (food.sugar || 0),
+                    sodium: totals.sodium + (food.sodium || 0),
+                    water: totals.water + (food.water || 0)
+                };
+            }, {
+                calories: 0, protein: 0, carbs: 0, fat: 0,
+                fiber: 0, sugar: 0, sodium: 0, water: 0
+            });
             
             // Obtener historial existente
             let history = JSON.parse(localStorage.getItem('calorieHistory') || '{}');
@@ -1499,21 +1861,39 @@
                 history[today] = {
                     date: today,
                     meals: [],
-                    totalCalories: 0
+                    nutrition: {
+                        calories: 0, protein: 0, carbs: 0, fat: 0,
+                        fiber: 0, sugar: 0, sodium: 0, water: 0
+                    }
                 };
             }
             
-            // Agregar nueva comida al día
+            // Agregar la comida actual con datos nutricionales completos
             history[today].meals.push({
                 timestamp: new Date().toLocaleTimeString(),
                 foods: [...currentMeal],
-                totalCalories: totalCalories
+                nutrition: nutritionTotals
             });
             
-            // Recalcular total del día
-            history[today].totalCalories = history[today].meals.reduce(
-                (sum, meal) => sum + meal.totalCalories, 0
-            );
+            // Actualizar totales del día
+            history[today].nutrition = history[today].meals.reduce((dayTotals, meal) => {
+                return {
+                    calories: dayTotals.calories + meal.nutrition.calories,
+                    protein: dayTotals.protein + meal.nutrition.protein,
+                    carbs: dayTotals.carbs + meal.nutrition.carbs,
+                    fat: dayTotals.fat + meal.nutrition.fat,
+                    fiber: dayTotals.fiber + meal.nutrition.fiber,
+                    sugar: dayTotals.sugar + meal.nutrition.sugar,
+                    sodium: dayTotals.sodium + meal.nutrition.sodium,
+                    water: dayTotals.water + meal.nutrition.water
+                };
+            }, {
+                calories: 0, protein: 0, carbs: 0, fat: 0,
+                fiber: 0, sugar: 0, sodium: 0, water: 0
+            });
+            
+            // Mantener compatibilidad con versión anterior
+            history[today].totalCalories = history[today].nutrition.calories;
             
             // Guardar en localStorage
             localStorage.setItem('calorieHistory', JSON.stringify(history));
@@ -1527,11 +1907,136 @@
         }
         
         /**
+         * Calcula y muestra estadísticas del historial
+         */
+        function calculateAndShowStatistics(history) {
+            const statisticsSection = document.getElementById('statisticsSection');
+            const generalStats = document.getElementById('generalStats');
+            const averageStats = document.getElementById('averageStats');
+            
+            if (Object.keys(history).length === 0) {
+                statisticsSection.style.display = 'none';
+                return;
+            }
+            
+            statisticsSection.style.display = 'block';
+            
+            // Calcular estadísticas generales
+            const dates = Object.keys(history);
+            const totalDays = dates.length;
+            let totalMeals = 0;
+            let totalNutrition = {
+                calories: 0, protein: 0, carbs: 0, fat: 0,
+                fiber: 0, sugar: 0, sodium: 0, water: 0
+            };
+            
+            // Encontrar día con más y menos calorías
+            let maxCaloriesDay = { date: '', calories: 0 };
+            let minCaloriesDay = { date: '', calories: Infinity };
+            
+            dates.forEach(date => {
+                const dayData = history[date];
+                totalMeals += dayData.meals.length;
+                
+                const dayNutrition = dayData.nutrition || {
+                    calories: dayData.totalCalories || 0,
+                    protein: 0, carbs: 0, fat: 0, fiber: 0, sugar: 0, sodium: 0, water: 0
+                };
+                
+                // Sumar totales
+                Object.keys(totalNutrition).forEach(key => {
+                    totalNutrition[key] += dayNutrition[key] || 0;
+                });
+                
+                // Verificar máximos y mínimos
+                if (dayNutrition.calories > maxCaloriesDay.calories) {
+                    maxCaloriesDay = { date, calories: dayNutrition.calories };
+                }
+                if (dayNutrition.calories < minCaloriesDay.calories && dayNutrition.calories > 0) {
+                    minCaloriesDay = { date, calories: dayNutrition.calories };
+                }
+            });
+            
+            // Calcular promedios
+            const averages = {};
+            Object.keys(totalNutrition).forEach(key => {
+                averages[key] = totalNutrition[key] / totalDays;
+            });
+            
+            // Renderizar estadísticas generales
+            generalStats.innerHTML = `
+                <div class="col-6 mb-3">
+                    <div class="bg-primary bg-opacity-10 p-3 rounded">
+                        <i class="bi bi-calendar-range text-primary fs-3"></i>
+                        <div class="fs-4 fw-bold">${totalDays}</div>
+                        <small>Días registrados</small>
+                    </div>
+                </div>
+                <div class="col-6 mb-3">
+                    <div class="bg-success bg-opacity-10 p-3 rounded">
+                        <i class="bi bi-list-ul text-success fs-3"></i>
+                        <div class="fs-4 fw-bold">${totalMeals}</div>
+                        <small>Comidas totales</small>
+                    </div>
+                </div>
+                <div class="col-6 mb-3">
+                    <div class="bg-warning bg-opacity-10 p-3 rounded">
+                        <i class="bi bi-arrow-up-circle text-warning fs-3"></i>
+                        <div class="fs-4 fw-bold">${Math.round(maxCaloriesDay.calories)}</div>
+                        <small>Máximo (kcal)</small>
+                    </div>
+                </div>
+                <div class="col-6 mb-3">
+                    <div class="bg-info bg-opacity-10 p-3 rounded">
+                        <i class="bi bi-arrow-down-circle text-info fs-3"></i>
+                        <div class="fs-4 fw-bold">${minCaloriesDay.calories === Infinity ? 0 : Math.round(minCaloriesDay.calories)}</div>
+                        <small>Mínimo (kcal)</small>
+                    </div>
+                </div>
+            `;
+            
+            // Renderizar promedios diarios
+            averageStats.innerHTML = `
+                <div class="col-6 mb-3">
+                    <div class="bg-warning bg-opacity-10 p-3 rounded">
+                        <i class="bi bi-lightning-charge text-warning fs-3"></i>
+                        <div class="fs-4 fw-bold">${Math.round(averages.calories)}</div>
+                        <small>Calorías promedio</small>
+                    </div>
+                </div>
+                <div class="col-6 mb-3">
+                    <div class="bg-info bg-opacity-10 p-3 rounded">
+                        <i class="bi bi-egg text-info fs-3"></i>
+                        <div class="fs-4 fw-bold">${Math.round(averages.protein)}g</div>
+                        <small>Proteína promedio</small>
+                    </div>
+                </div>
+                <div class="col-6 mb-3">
+                    <div class="bg-success bg-opacity-10 p-3 rounded">
+                        <i class="bi bi-grain text-success fs-3"></i>
+                        <div class="fs-4 fw-bold">${Math.round(averages.carbs)}g</div>
+                        <small>Carbohidratos promedio</small>
+                    </div>
+                </div>
+                <div class="col-6 mb-3">
+                    <div class="bg-primary bg-opacity-10 p-3 rounded">
+                        <i class="bi bi-droplet text-primary fs-3"></i>
+                        <div class="fs-4 fw-bold">${Math.round(averages.fat)}g</div>
+                        <small>Grasas promedio</small>
+                    </div>
+                </div>
+            `;
+        }
+        
+        /**
          * Carga y muestra el historial
          */
         function loadHistory() {
             const history = JSON.parse(localStorage.getItem('calorieHistory') || '{}');
             const historyList = document.getElementById('historyList');
+            
+            // Calcular y mostrar estadísticas
+            calculateAndShowStatistics(history);
             
             if (Object.keys(history).length === 0) {
                 historyList.innerHTML = `
@@ -1560,35 +2065,107 @@
                     day: 'numeric'
                 });
                 
+                // Obtener datos nutricionales (compatibilidad con versiones anteriores)
+                const nutrition = dayData.nutrition || {
+                    calories: dayData.totalCalories || 0,
+                    protein: 0, carbs: 0, fat: 0, fiber: 0, sugar: 0, sodium: 0, water: 0
+                };
+                
                 let mealsHtml = '';
                 dayData.meals.forEach((meal, index) => {
+                    const mealNutrition = meal.nutrition || {
+                        calories: meal.totalCalories || 0,
+                        protein: 0, carbs: 0, fat: 0, fiber: 0, sugar: 0, sodium: 0, water: 0
+                    };
+                    
                     mealsHtml += `
-                        <div class="mb-2">
-                            <strong>Comida ${index + 1} (${meal.timestamp}):</strong> ${meal.totalCalories} kcal
-                            <ul class="mt-1">
-                                ${meal.foods.map(food => 
-                                    `<li>${food.name} - ${food.amount}${food.unit} (${food.calories} kcal)</li>`
-                                ).join('')}
-                            </ul>
+                        <div class="mb-3 p-3 border rounded">
+                            <h6><strong>Comida ${index + 1}</strong> <small class="text-muted">(${meal.timestamp})</small></h6>
+                            
+                            <!-- Resumen nutricional de la comida -->
+                            <div class="row mb-2">
+                                <div class="col-sm-6">
+                                    <small><i class="bi bi-lightning-charge text-warning"></i> <strong>${Math.round(mealNutrition.calories)}</strong> kcal</small><br>
+                                    <small><i class="bi bi-egg text-info"></i> Proteína: <strong>${Math.round(mealNutrition.protein)}g</strong></small><br>
+                                    <small><i class="bi bi-grain text-success"></i> Carbohidratos: <strong>${Math.round(mealNutrition.carbs)}g</strong></small>
+                                </div>
+                                <div class="col-sm-6">
+                                    <small><i class="bi bi-droplet text-primary"></i> Grasas: <strong>${Math.round(mealNutrition.fat)}g</strong></small><br>
+                                    <small><i class="bi bi-flower1 text-secondary"></i> Fibra: <strong>${Math.round(mealNutrition.fiber)}g</strong></small><br>
+                                    <small><i class="bi bi-cup-straw text-danger"></i> Sodio: <strong>${Math.round(mealNutrition.sodium)}mg</strong></small>
+                                </div>
+                            </div>
+                            
+                            <!-- Lista de alimentos -->
+                            <details>
+                                <summary class="btn btn-sm btn-outline-secondary mb-2">
+                                    <i class="bi bi-list-ul"></i> Ver alimentos (${meal.foods.length})
+                                </summary>
+                                <ul class="list-unstyled ms-3">
+                                    ${meal.foods.map(food => 
+                                        `<li class="mb-1">
+                                            <small>
+                                                <strong>${food.name}</strong> - ${food.amount}${food.unit} 
+                                                <span class="text-muted">(${food.calories} kcal)</span>
+                                            </small>
+                                        </li>`
+                                    ).join('')}
+                                </ul>
+                            </details>
                         </div>
                     `;
                 });
                 
                 dayElement.innerHTML = `
-                    <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
                             <h5 class="mb-1">${formattedDate}</h5>
-                            <p class="text-muted mb-2">Total del día: <strong>${dayData.totalCalories} kcal</strong></p>
+                            <p class="text-muted mb-0">
+                                <i class="bi bi-calendar-check text-success"></i> ${dayData.meals.length} comida${dayData.meals.length !== 1 ? 's' : ''}
+                            </p>
                         </div>
                         <button class="btn btn-sm btn-outline-danger" onclick="deleteDayFromHistory('${date}')">
                             <i class="bi bi-trash"></i>
                         </button>
                     </div>
+                    
+                    <!-- Resumen nutricional del día -->
+                    <div class="row mb-3 nutrition-summary">
+                        <div class="col-6 col-md-3 text-center">
+                            <div class="bg-warning bg-opacity-10 p-2 rounded">
+                                <i class="bi bi-lightning-charge text-warning fs-4"></i>
+                                <div><strong>${Math.round(nutrition.calories)}</strong></div>
+                                <small>Calorías</small>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 text-center">
+                            <div class="bg-info bg-opacity-10 p-2 rounded">
+                                <i class="bi bi-egg text-info fs-4"></i>
+                                <div><strong>${Math.round(nutrition.protein)}g</strong></div>
+                                <small>Proteína</small>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 text-center">
+                            <div class="bg-success bg-opacity-10 p-2 rounded">
+                                <i class="bi bi-grain text-success fs-4"></i>
+                                <div><strong>${Math.round(nutrition.carbs)}g</strong></div>
+                                <small>Carbohidratos</small>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 text-center">
+                            <div class="bg-primary bg-opacity-10 p-2 rounded">
+                                <i class="bi bi-droplet text-primary fs-4"></i>
+                                <div><strong>${Math.round(nutrition.fat)}g</strong></div>
+                                <small>Grasas</small>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="collapse" id="day-${date}">
                         ${mealsHtml}
                     </div>
                     <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#day-${date}">
-                        <i class="bi bi-eye"></i> Ver detalles
+                        <i class="bi bi-eye"></i> Ver detalles de comidas
                     </button>
                 `;
                 
@@ -1738,6 +2315,80 @@
         // Hacer funciones globales para uso en onclick
         window.removeFoodFromMeal = removeFoodFromMeal;
         window.deleteDayFromHistory = deleteDayFromHistory;
+        
+        // ✨ ANIMACIONES GSAP - Entrada fluida de elementos
+        function initAnimations() {
+            // Set initial states (invisible)
+            gsap.set('.main-container', { opacity: 0, y: 30 });
+            gsap.set('h1', { opacity: 0, y: 20 });
+            gsap.set('.lead', { opacity: 0, y: 15 });
+            gsap.set('.ad-banner-top', { opacity: 0, scale: 0.95 });
+            gsap.set('.nav-pills', { opacity: 0, y: 20 });
+            gsap.set('.btn', { scale: 1 });
+            
+            // Main timeline for smooth entrance
+            const tl = gsap.timeline();
+            
+            // Animate main container
+            tl.to('.main-container', { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.8, 
+                ease: 'power2.out' 
+            })
+            // Animate title
+            .to('h1', { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.6, 
+                ease: 'power2.out' 
+            }, '-=0.4')
+            // Animate subtitle
+            .to('.lead', { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.5, 
+                ease: 'power2.out' 
+            }, '-=0.3')
+            // Animate ad banner
+            .to('.ad-banner-top', { 
+                opacity: 1, 
+                scale: 1, 
+                duration: 0.5, 
+                ease: 'back.out(1.7)' 
+            }, '-=0.2')
+            // Animate navigation
+            .to('.nav-pills', { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.5, 
+                ease: 'power2.out' 
+            }, '-=0.2');
+            
+            // Subtle hover animations for buttons
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    gsap.to(btn, { scale: 1.05, duration: 0.2, ease: 'power2.out' });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { scale: 1, duration: 0.2, ease: 'power2.out' });
+                });
+            });
+            
+            // Floating animation for ad banner
+            gsap.to('.ad-banner-top', {
+                y: -5,
+                duration: 3,
+                ease: 'power2.inOut',
+                yoyo: true,
+                repeat: -1
+            });
+        }
+        
+        // Initialize animations when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(initAnimations, 100);
+        });
         
     </script>
 </body>
