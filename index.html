@@ -39,10 +39,12 @@
             line-height: 1.6;
         }
         
-        /* Layout principal simplificado - solo contenido */
+        /* Layout principal con margen para publicidad */
         .main-layout {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
+            display: flex;
+            gap: 20px;
         }
         
         /* Contenedor principal con efecto glassmorphism */
@@ -52,22 +54,20 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            flex: 1;
+            max-width: 1000px;
         }
         
-        /* Sidebar derecho con posicionamiento fijo */
+        /* Sidebar derecho simple */
         .ad-sidebar {
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
             width: 160px;
-            z-index: 1000;
+            flex-shrink: 0;
         }
         
-        /* Estilos para los anuncios con posicionamiento fijo */
+        /* Estilo para el banner publicitario */
         .ad-banner {
             width: 160px;
-            height: 280px; /* Altura reducida para que quepan 2 */
+            height: 600px;
             background: linear-gradient(145deg, #f8f9fa, #e9ecef);
             border-radius: 15px;
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -78,16 +78,13 @@
             color: #6c757d;
             font-size: 0.9rem;
             text-align: center;
+            position: sticky;
+            top: 20px;
             transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
-        
-        .ad-banner:last-child {
-            margin-bottom: 0;
         }
         
         .ad-banner:hover {
-            transform: translateX(-5px);
+            transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
         
@@ -108,23 +105,14 @@
         }
         
         /* Responsive: ocultar sidebar en pantallas pequeñas */
-        @media (max-width: 1399.98px) {
+        @media (max-width: 1299.98px) {
             .ad-sidebar {
-                display: none !important;
+                display: none;
             }
-        }
-        
-        /* Asegurar que en pantallas muy grandes no se pegue demasiado al borde */
-        @media (min-width: 1600px) {
-            .ad-sidebar {
-                right: calc((100vw - 1400px) / 2 + 20px);
-            }
-        }
-        
-        /* Para pantallas medianas, posicionar cerca del contenido */
-        @media (min-width: 1400px) and (max-width: 1599px) {
-            .ad-sidebar {
-                right: 20px;
+            
+            .main-layout {
+                display: block;
+                max-width: 1000px;
             }
         }
         
