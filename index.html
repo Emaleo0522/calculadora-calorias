@@ -39,27 +39,13 @@
             line-height: 1.6;
         }
         
-        /* Layout principal con CSS Grid (más confiable) */
+        /* Layout principal con sidebar derecho único */
         .main-layout {
-            display: grid;
-            grid-template-columns: 160px 1fr 160px;
+            display: flex;
             gap: 20px;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            width: 100%;
-        }
-        
-        /* Sidebars para publicidad */
-        .ad-sidebar {
-            width: 160px;
-        }
-        
-        .ad-sidebar.left {
-            grid-column: 1;
-        }
-        
-        .ad-sidebar.right {
-            grid-column: 3;
+            align-items: flex-start;
         }
         
         /* Contenedor principal con efecto glassmorphism */
@@ -69,7 +55,14 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            grid-column: 2;
+            flex: 1;
+            min-width: 0;
+        }
+        
+        /* Sidebar derecho para publicidad */
+        .ad-sidebar {
+            width: 160px;
+            flex-shrink: 0;
         }
         
         /* Estilos para los anuncios */
@@ -89,6 +82,11 @@
             position: sticky;
             top: 20px;
             transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .ad-banner:last-child {
+            margin-bottom: 0;
         }
         
         .ad-banner:hover {
@@ -107,23 +105,22 @@
             opacity: 0.5;
         }
         
-        /* Responsive: cambiar a layout de 1 columna en pantallas pequeñas */
-        @media (max-width: 1399.98px) {
-            .main-layout {
-                display: block !important;
-                max-width: 1000px;
-            }
-            
+        /* Responsive: ocultar sidebar en pantallas pequeñas */
+        @media (max-width: 1199.98px) {
             .ad-sidebar {
                 display: none !important;
             }
+            
+            .main-layout {
+                max-width: 1000px;
+                justify-content: center;
+            }
         }
         
-        /* En pantallas grandes, asegurar grid de 3 columnas */
-        @media (min-width: 1400px) {
+        /* En pantallas medianas, reducir max-width */
+        @media (min-width: 1200px) and (max-width: 1399.98px) {
             .main-layout {
-                display: grid;
-                grid-template-columns: 160px 1fr 160px;
+                max-width: 1000px;
             }
         }
         
@@ -347,17 +344,6 @@
     <!-- Contenedor principal de la aplicación con sidebars publicitarios -->
     <div class="container-fluid py-4">
         <div class="main-layout">
-            <!-- Sidebar izquierdo para publicidad -->
-            <div class="ad-sidebar left">
-                <div class="ad-banner">
-                    <div class="ad-placeholder">
-                        <i class="bi bi-badge-ad"></i>
-                        <div>Espacio Publicitario</div>
-                        <small>160x600</small>
-                    </div>
-                </div>
-            </div>
-            
             <!-- Contenedor principal del contenido -->
             <div class="main-container p-4">
                     
@@ -658,12 +644,19 @@
             <!-- Contenedor principal del contenido cierra -->
             </div>
             
-            <!-- Sidebar derecho para publicidad -->
-            <div class="ad-sidebar right">
+            <!-- Sidebar derecho para publicidad (2 banners) -->
+            <div class="ad-sidebar d-none d-xl-block">
+                <div class="ad-banner">
+                    <div class="ad-placeholder">
+                        <i class="bi bi-badge-ad"></i>
+                        <div>Espacio Publicitario #1</div>
+                        <small>160x600</small>
+                    </div>
+                </div>
                 <div class="ad-banner">
                     <div class="ad-placeholder">
                         <i class="bi bi-bullseye"></i>
-                        <div>Espacio Publicitario</div>
+                        <div>Espacio Publicitario #2</div>
                         <small>160x600</small>
                     </div>
                 </div>
