@@ -45,20 +45,13 @@
             gap: 20px;
             max-width: 1400px;
             margin: 0 auto;
+            align-items: flex-start;
         }
         
         /* Sidebars para publicidad */
         .ad-sidebar {
             width: 160px;
             flex-shrink: 0;
-        }
-        
-        .ad-sidebar.left {
-            order: 1;
-        }
-        
-        .ad-sidebar.right {
-            order: 3;
         }
         
         /* Contenedor principal con efecto glassmorphism */
@@ -69,7 +62,6 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             flex: 1;
-            order: 2;
             min-width: 0;
         }
         
@@ -87,7 +79,6 @@
             color: #6c757d;
             font-size: 0.9rem;
             text-align: center;
-            margin-bottom: 20px;
             position: sticky;
             top: 20px;
             transition: all 0.3s ease;
@@ -341,18 +332,11 @@
     <div class="container-fluid py-4">
         <div class="main-layout">
             <!-- Sidebar izquierdo para publicidad -->
-            <div class="ad-sidebar left d-none d-lg-block">
+            <div class="ad-sidebar d-none d-lg-block">
                 <div class="ad-banner">
                     <div class="ad-placeholder">
                         <i class="bi bi-badge-ad"></i>
                         <div>Espacio Publicitario</div>
-                        <small>160x600</small>
-                    </div>
-                </div>
-                <div class="ad-banner">
-                    <div class="ad-placeholder">
-                        <i class="bi bi-megaphone"></i>
-                        <div>Tu Anuncio Aquí</div>
                         <small>160x600</small>
                     </div>
                 </div>
@@ -659,18 +643,11 @@
             </div>
             
             <!-- Sidebar derecho para publicidad -->
-            <div class="ad-sidebar right d-none d-lg-block">
+            <div class="ad-sidebar d-none d-lg-block">
                 <div class="ad-banner">
                     <div class="ad-placeholder">
                         <i class="bi bi-bullseye"></i>
                         <div>Espacio Publicitario</div>
-                        <small>160x600</small>
-                    </div>
-                </div>
-                <div class="ad-banner">
-                    <div class="ad-placeholder">
-                        <i class="bi bi-shop"></i>
-                        <div>Tu Anuncio Aquí</div>
                         <small>160x600</small>
                     </div>
                 </div>
